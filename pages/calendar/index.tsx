@@ -21,7 +21,7 @@ export default function CalendarIndex() {
       <Block>
         <p>header</p>
       </Block>
-      <CalendarView />
+      <CalendarView date={new Date()} />
       <Block>
         <p>footer</p>
       </Block>
