@@ -1,8 +1,9 @@
 import { CalendarView } from "../../components";
-import type { PropsWithChildren, ReactElement } from "react";
+import { PropsWithChildren, ReactElement } from "react";
 
 import { example, page } from "../../components/Calendar/calendar.css";
-import { format, getMonth } from "date-fns";
+import { MonthNav } from "../../components/Calendar/components";
+import { CalendarProvider } from "../../components/Calendar/context/CalendarContext";
 
 function Page({ children }: PropsWithChildren): ReactElement {
 	return <div className={page}>{children}</div>;
@@ -13,16 +14,17 @@ function Block({ children }: PropsWithChildren) {
 }
 
 export default function CalendarIndex() {
-	const date = new Date();
 	return (
-		<Page>
-			<Block>
-				<p>{format(date, "LLLL")}</p>
-			</Block>
-			<CalendarView date={date} />
-			<Block>
-				<p>footer</p>
-			</Block>
-		</Page>
+		<CalendarProvider date={new Date()}>
+			<Page>
+				<Block>
+					<MonthNav />
+				</Block>
+				<CalendarView />
+				<Block>
+					<p>footer</p>
+				</Block>
+			</Page>
+		</CalendarProvider>
 	);
 }

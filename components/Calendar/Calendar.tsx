@@ -3,7 +3,6 @@ import {
 	endOfMonth,
 	eachDayOfInterval,
 	eachWeekOfInterval,
-	format,
 	startOfWeek,
 	endOfWeek,
 	getISOWeek,
@@ -15,6 +14,7 @@ import {
 	weekNumber,
 	weeksOfYear,
 } from "./calendar.css";
+import { useCalendarContext } from "./context/CalendarContext";
 
 function WeekOfYear({
 	startDate,
@@ -47,7 +47,9 @@ function WeekOfYear({
 	);
 }
 
-export function CalendarView({ date }: { date: Date }) {
+export function CalendarView() {
+	const { date } = useCalendarContext();
+
 	const startDate = startOfWeek(startOfMonth(date), {
 		weekStartsOn: 1,
 	});
