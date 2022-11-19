@@ -2,7 +2,7 @@ import { CalendarView } from "../../components";
 import { PropsWithChildren, ReactElement } from "react";
 
 import { example, page } from "../../components/Calendar/calendar.css";
-import { MonthNav } from "../../components/Calendar/components";
+import { MonthNav, TodayButton } from "../../components/Calendar/components";
 import { CalendarProvider } from "../../components/Calendar/context/CalendarContext";
 
 function Page({ children }: PropsWithChildren): ReactElement {
@@ -22,7 +22,7 @@ export default function CalendarIndex() {
 				</Block>
 				<CalendarView />
 				<Block>
-					<p>footer</p>
+					<TodayButton />
 				</Block>
 			</Page>
 		</CalendarProvider>
