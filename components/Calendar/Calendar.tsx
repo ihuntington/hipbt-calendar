@@ -3,11 +3,12 @@ import {
 	endOfMonth,
 	eachDayOfInterval,
 	eachWeekOfInterval,
+	format,
 	startOfWeek,
 	endOfWeek,
 	getISOWeek,
 } from "date-fns";
-import { DayCell } from "./components";
+import { DayCell, DaysOfWeek } from "./components";
 import {
 	calendar,
 	calendarView,
@@ -22,12 +23,15 @@ function WeekOfYear({
 	startDate: Date;
 	endDate: Date;
 }) {
-	const weeks = eachWeekOfInterval({
-		start: startDate,
-		end: endDate,
-	}, {
-		weekStartsOn: 1,
-	});
+	const weeks = eachWeekOfInterval(
+		{
+			start: startDate,
+			end: endDate,
+		},
+		{
+			weekStartsOn: 1,
+		}
+	);
 
 	return (
 		<div className={weeksOfYear}>
@@ -57,6 +61,7 @@ export function CalendarView({ date }: { date: Date }) {
 
 	return (
 		<div className={calendarView}>
+			<DaysOfWeek date={date} />
 			<WeekOfYear startDate={startDate} endDate={endDate} />
 			<div className={calendar}>
 				{dates.map((d) => (

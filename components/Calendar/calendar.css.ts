@@ -27,13 +27,19 @@ export const calendarView = style({
     background: "#f1f5f9",
     display: "grid",
     flex: 1,
-    gridTemplateColumns: "4rem 1fr",
+	gridTemplateColumns: "4rem 1fr",
+	gridTemplateRows: "min-content 1fr",
+	gridTemplateAreas: `
+		". header"
+		"weeks body"
+	`,
 });
 
 export const calendar = style({
     display: "grid",
     flex: 1,
     gridTemplateColumns: "repeat(7, 1fr)",
+	gridArea: "body",
 });
 
 export const example = style({
@@ -41,9 +47,10 @@ export const example = style({
 });
 
 export const weeksOfYear = style({
-    display: "flex",
-    flex: 1,
-    flexDirection: "column",
+    display: "grid",
+	gridArea: "weeks",
+	order: 1,
+	width: "4rem",
 });
 
 export const weekNumber = style({

@@ -1,4 +1,4 @@
-import { formatISO, isSameMonth } from "date-fns";
+import { getDate, isSameMonth } from "date-fns";
 import { dayVariant } from "./DayCell.css";
 
 interface IDayCell {
@@ -10,7 +10,7 @@ export function DayCell({ date, selectedMonth }: IDayCell) {
   const variant = isSameMonth(date, selectedMonth);
   return (
     <div className={dayVariant[variant ? "inMonth" : "outMonth"]}>
-      <p>{formatISO(date, { representation: "date" })}</p>
+      <p>{getDate(date)}</p>
     </div>
   );
 }
