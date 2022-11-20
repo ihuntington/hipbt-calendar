@@ -1,4 +1,13 @@
-import { styleVariants } from "@vanilla-extract/css";
+import { style, styleVariants } from "@vanilla-extract/css";
+
+export const selected = styleVariants({
+	base: {
+		background: "transparent",
+	},
+	selected: {
+		background: "#7dd3fc",
+	},
+});
 
 export const dayVariant = styleVariants({
     inMonth: {
