@@ -9,11 +9,15 @@ export const selected = styleVariants({
 	},
 });
 
-export const dayVariant = styleVariants({
+export const cell = styleVariants({
     inMonth: {
-        color: "#475569",
+        color: "#27272a",
     },
     outMonth: {
-        color: "#cbd5e1",
+        color: "#a1a1aa",
     },
 });
+
+const cellBase = style({
+
+})

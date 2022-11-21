@@ -24,7 +24,6 @@ export const page = style({
 });
 
 export const calendarView = style({
-    background: "#f1f5f9",
     display: "grid",
     flex: 1,
 	gridTemplateColumns: "4rem 1fr",
