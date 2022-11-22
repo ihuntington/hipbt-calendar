@@ -3,15 +3,14 @@ import { vars } from "../../styles/theme.css";
 
 export const button = style({
 	border: `none`,
-	background: `none`,
-	color: vars.colors.link,
+	background: vars.colors.blue600,
+	color: vars.colors.white,
 	borderWidth: `1px`,
 	borderStyle: `solid`,
 	borderColor: `transparent`,
-	transition: `all 0.3s ease-in-out`,
 	borderRadius: vars.radii.sm,
-	paddingLeft: vars.space.sm,
-	paddingRight: vars.space.sm,
+	paddingInline: vars.space.sm,
+	paddingBlock: vars.space.xs,
 	selectors: {
 		"&:hover": {
 			color: vars.colors.linkHover,

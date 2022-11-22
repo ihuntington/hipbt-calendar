@@ -15,6 +15,16 @@ globalStyle(`body`, {
   WebkitFontSmoothing: `antialiased`,
 })
 
+globalStyle("body", {
+    display: "flex",
+    flex: 1,
+});
+
+globalStyle("#__next", {
+    display: "flex",
+    flex: 1,
+});
+
 globalStyle(`img, picture, video, canvas, svg`, {
   display: `block`,
   maxWidth: `100%`,
