@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { startOfWeek, endOfWeek, eachDayOfInterval, formatISO, format, isToday, getISOWeek } from "date-fns";
+import { startOfWeek, endOfWeek, eachDayOfInterval, format, isToday, getISOWeek, isSameWeek } from "date-fns";
 import { useCalendarContext } from "../../context/CalendarContext";
 import * as styles from "./WeekView.css";
 
@@ -19,7 +19,7 @@ export function WeekView() {
 	});
 
 	return (
-		<div className={styles.weekView}>
+		<div className={clsx(styles.weekView, { [styles.currentWeek]: isSameWeek(new Date(), date) })}>
 			<div className={styles.rowHeader}>
 				<div className={clsx(styles.count)}>
 					<span>{`W${weekCount}`}</span>

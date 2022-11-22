@@ -1,6 +1,8 @@
 import { style } from "@vanilla-extract/css";
 import { vars } from "../../../../styles/theme.css";
 
+export const currentWeek = style({});
+
 export const weekView = style({
 	display: "flex",
 	flex: 1,
@@ -14,6 +16,12 @@ export const count = style({
 	placeContent: "center",
 	placeItems: "center",
 	width: "4rem",
+
+	selectors: {
+		[`${currentWeek} &`]: {
+			color: vars.colors.red500,
+		},
+	},
 });
 
 export const today = style({});
