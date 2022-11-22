@@ -1,6 +1,6 @@
-import { App } from "../../components";
+import { App, Flex } from "../../components";
 import { CalendarProvider } from "../../components/Calendar/context/CalendarContext";
-import { WeekView } from "../../components/Calendar/components";
+import { WeekHeader, WeekNav, WeekView } from "../../components/Calendar/components";
 
 import * as styles from "./index.css";
 
@@ -20,7 +20,10 @@ export default function WeekViewIndex() {
 			<CalendarProvider date={new Date()}>
 				<Page>
 					<Block>
-						<p>Header</p>
+						<Flex justifyContent="spaceBetween">
+							<WeekHeader />
+							<WeekNav />
+						</Flex>
 					</Block>
 					<WeekView />
 					<Block>
