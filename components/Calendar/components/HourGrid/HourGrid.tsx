@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import {
 	addDays,
+	getDay,
 	differenceInMinutes,
 	eachHourOfInterval,
 	format,
 	startOfDay,
 } from "date-fns";
 import clsx from "clsx";
+import { sprinkles as s} from "@/styles/sprinkles.css";
 import * as styles from "./HourGrid.css";
 
 function TimeMarker({
@@ -17,6 +19,7 @@ function TimeMarker({
 	highlight?: boolean;
 }) {
 	const hour = format(date, "HH:mm");
+	const dayIndex = getDay(date);
 	return (
 		<div
 			className={clsx(styles.timeMarker, {
@@ -25,6 +28,7 @@ function TimeMarker({
 		>
 			<time className={styles.time}>{hour}</time>
 			<span className={styles.line}></span>
+			{highlight && <span className={styles.marker} style={{gridColumn: dayIndex + 1}}></span>}
 		</div>
 	);
 }
@@ -60,11 +64,12 @@ function CurrentTimeMarker() {
 
 	return (
 		<div
+			className={s({ position: "absolute" })}
 			style={{
-				position: "absolute",
 				top: `${posY}px`,
 				left: "0px",
 				right: "0px",
+				zIndex: 2,
 			}}
 		>
 			<TimeMarker date={markerDate} highlight />
