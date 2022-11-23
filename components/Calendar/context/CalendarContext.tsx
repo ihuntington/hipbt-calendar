@@ -1,3 +1,4 @@
+import { startOfDay } from "date-fns";
 import { createContext, PropsWithChildren, useContext, useMemo, useState } from "react";
 
 interface ICalendarContext {
@@ -5,7 +6,7 @@ interface ICalendarContext {
 }
 
 export const CalendarContext = createContext<ICalendarContext>({
-	date: new Date(),
+	date: startOfDay(new Date()),
 });
 
 export const useCalendarContext = () => useContext(CalendarContext);
@@ -24,10 +25,10 @@ export function CalendarProvider({
 	children,
 	date,
 }: PropsWithChildren<ICalendarContext>) {
-	const [state, setState] = useState({ date });
+	const [state, setState] = useState({ date: startOfDay(date) });
 
 	const actions = useMemo(() => ({
-		setDate: (date: Date) => setState((s) => ({ ...s, date })),
+		setDate: (date: Date) => setState((s) => ({ ...s, date: startOfDay(date) })),
 	}), []);
 
 	return (
