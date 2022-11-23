@@ -3,19 +3,52 @@ import { vars } from "../../../../styles/theme.css";
 
 export const currentWeek = style({});
 
-export const weekView = style({
+export const overflow = style({
+	height: "calc(100vh - 128px - 41px)",
+	overflowY: "scroll",
+});
+
+export const wrapper = style({
 	display: "flex",
 	flex: 1,
 	flexDirection: "column",
 	inlineSize: "100%",
-	padding: "1rem",
+	paddingInline: "1rem",
+});
+
+export const weekView = style({
+});
+
+export const weekViewBody = style({
+});
+
+export const hourRow = style({
+	height: 64,
+});
+
+export const timeLine = style({
+	display: "flex",
+	alignItems: "center",
+	columnGap: 4,
+})
+
+export const time = style({
+	textAlign: "right",
+	width: "3rem",
+});
+
+export const line = style({
+	backgroundColor: vars.colors.gray300,
+	display: "block",
+	flex: 1,
+	height: 1,
 });
 
 export const count = style({
 	display: "flex",
-	placeContent: "center",
+	placeContent: "end",
 	placeItems: "center",
-	width: "4rem",
+	width: "3rem",
 
 	selectors: {
 		[`${currentWeek} &`]: {
@@ -43,6 +76,15 @@ export const date = style({
 	},
 });
 
+export const col = style({
+	flex: 1,
+});
+
+export const colDay = style([col, {
+	display: "flex",
+	alignItems: "center",
+}]);
+
 export const day = style({
 	selectors: {
 		[`${today} &`]: {
@@ -61,9 +103,6 @@ export const rowHeader = style([row, {
 	borderBlockEndWidth: 1,
 	borderBlockEndColor: vars.colors.gray400,
 	borderBlockEndStyle: "solid",
-	paddingBlockEnd: ".25rem",
+	height: 40,
 }]);
 
-export const col = style({
-	flex: 1,
-});

@@ -10,25 +10,19 @@ function Page({ children }: React.PropsWithChildren): React.ReactElement {
 	return <div className={styles.page}>{children}</div>;
 }
 
-function Block({ children }: React.PropsWithChildren) {
-	return <div className={styles.block}>{children}</div>;
-}
-
 export default function WeekViewIndex() {
 	return (
 		<App>
 			<CalendarProvider date={new Date()}>
 				<Page>
-					<Block>
-						<Flex justifyContent="spaceBetween">
-							<WeekHeader />
-							<WeekNav />
-						</Flex>
-					</Block>
+					<Flex alignItems="center" justifyContent="spaceBetween" className={styles.header}>
+						<WeekHeader />
+						<WeekNav />
+					</Flex>
 					<WeekView />
-					<Block>
+					<Flex alignItems="center" className={styles.footer}>
 						<p>Footer</p>
-					</Block>
+					</Flex>
 				</Page>
 			</CalendarProvider>
 		</App>
