@@ -9,6 +9,8 @@ type FlexDirection = keyof typeof styles.direction;
 
 type JustifyContent = keyof typeof styles.justifyContent;
 
+type AlignItems = keyof typeof styles.alignItems;
+
 interface IFlex {
 	/** HTML Element type
 	 * @default 'div'
@@ -22,6 +24,11 @@ interface IFlex {
 	 * @default 'normal'
 	 */
 	justifyContent?: JustifyContent;
+	/** Align items
+	 * @default 'normal'
+	 */
+	alignItems?: AlignItems;
+	className?: string;
 }
 
 export function Flex({
@@ -29,6 +36,8 @@ export function Flex({
 	as = "div",
 	direction = "row",
 	justifyContent = "normal",
+	alignItems = "normal",
+	className = "",
 }: React.PropsWithChildren<IFlex>) {
 	const Component = as;
 	return (
@@ -36,7 +45,9 @@ export function Flex({
 			className={clsx(
 				styles.display,
 				styles.direction[direction],
-				styles.justifyContent[justifyContent]
+				styles.justifyContent[justifyContent],
+				styles.alignItems[alignItems],
+				className,
 			)}
 		>
 			{children}

@@ -19,6 +19,27 @@ export const direction = styleVariants({
 	},
 });
 
+export const alignItems = styleVariants({
+	normal: {
+		justifyContent: "normal",
+	},
+	baseline: {
+		justifyContent: "baseline",
+	},
+	flexStart: {
+		alignItems: "flex-start",
+	},
+	flexEnd: {
+		alignItems: "flex-end",
+	},
+	center: {
+		alignItems: "center",
+	},
+	stretch: {
+		alignItems: "stretch",
+	},
+});
+
 export const justifyContent = styleVariants({
 	normal: {
 		justifyContent: "normal",
