@@ -50,6 +50,7 @@ export const col = style({
 export const colDay = style([col, {
 	display: "flex",
 	alignItems: "center",
+	justifyContent: "center",
 }]);
 
 export const day = style({
