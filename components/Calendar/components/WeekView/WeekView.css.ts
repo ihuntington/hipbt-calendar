@@ -60,22 +60,27 @@ export const day = style({
 	},
 });
 
-export const row = style({
-	display: "flex",
-	inlineSize: "100%",
-	gap: "0.5rem",
-});
-
-export const rowHeader = style([row, {
+export const rowHeader = style({
+	backgroundColor: vars.colors.background,
 	borderBlockEndWidth: 1,
 	borderBlockEndColor: vars.colors.gray400,
 	borderBlockEndStyle: "solid",
+	display: "flex",
+	gap: "0.5rem",
 	height: 40,
-}]);
+	position: "fixed",
+	top: 64,
+	left: 0,
+	right: 0,
+	marginInline: "1rem",
+	zIndex: 1,
+});
 
+// TODO: make dynamic
+// Reference the height of the footer?
+// Really don't need this class name
 export const rowBodyWrapper = style({
-	// TODO: make dynamic
-	height: "calc(100vh - 128px - 41px)",
+	paddingBottom: 64,
 });
 
 export const bodyCols = style({

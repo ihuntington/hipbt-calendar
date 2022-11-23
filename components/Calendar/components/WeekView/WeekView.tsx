@@ -56,7 +56,7 @@ export function WeekView() {
 					);
 				})}
 			</div>
-			<div className={clsx(s({ overflowY: "scroll" }), styles.rowBodyWrapper)}>
+			<div className={styles.rowBodyWrapper}>
 				<div className={s({ position: "relative" })}>
 					<div>
 						<HourGrid />
