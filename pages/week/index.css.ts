@@ -11,7 +11,7 @@ export const header = style({
 	backgroundColor: vars.colors.background,
 	height: "4rem",
 	marginInline: "1rem",
-	position: "sticky",
+	position: "fixed",
 	left: 0,
 	top: 0,
 	right: 0,
@@ -21,4 +21,5 @@ export const header = style({
 export const footer = style([header, {
 	bottom: 0,
 	top: "unset",
+	zIndex: 2,
 }]);

@@ -78,10 +78,11 @@ export const rowHeader = style({
 });
 
 // TODO: make dynamic
-// Reference the height of the footer?
+// Reference the height of the header & footer?
 // Really don't need this class name
 export const rowBodyWrapper = style({
-	paddingTop: 40,
+	paddingTop: 104,
+	paddingBottom: 64,
 });
 
 export const bodyCols = style({
