@@ -81,7 +81,7 @@ export const rowHeader = style({
 // Reference the height of the footer?
 // Really don't need this class name
 export const rowBodyWrapper = style({
-	paddingBottom: 64,
+	paddingTop: 40,
 });
 
 export const bodyCols = style({
