@@ -3,12 +3,12 @@ import { vars } from "../../styles/theme.css";
 
 export const button = style({
 	border: `none`,
-	background: vars.colors.blue600,
-	color: vars.colors.white,
-	borderWidth: `1px`,
+	background: "transparent",
+	color: vars.colors.black,
+	borderWidth: `2px`,
 	borderStyle: `solid`,
-	borderColor: `transparent`,
-	borderRadius: vars.radii.sm,
+	borderColor: vars.colors.black,
+	borderRadius: vars.radii.md,
 	paddingInline: vars.space.sm,
 	paddingBlock: vars.space.xs,
 	selectors: {
