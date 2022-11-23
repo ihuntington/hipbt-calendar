@@ -73,3 +73,31 @@ export const rowHeader = style([row, {
 	height: 40,
 }]);
 
+export const rowBodyWrapper = style({
+	// TODO: make dynamic
+	height: "calc(100vh - 128px - 41px)",
+});
+
+export const bodyCols = style({
+	display: "grid",
+	columnGap: "0.5rem",
+	gridTemplateColumns: "3rem repeat(7, 1fr)",
+	pointerEvents: "none",
+	position: "absolute",
+	top: 0,
+	bottom: 0,
+	width: "100%",
+});
+
+export const separator = style({
+	height: "100%",
+	selectors: {
+		"&::after": {
+			content: `""`,
+			display: "block",
+			backgroundColor: vars.colors.gray300,
+			height: "100%",
+			width: 1,
+		}
+	}
+});

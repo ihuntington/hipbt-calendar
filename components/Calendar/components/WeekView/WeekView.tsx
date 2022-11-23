@@ -10,6 +10,8 @@ import {
 } from "date-fns";
 import { useCalendarContext } from "../../context/CalendarContext";
 import { HourGrid } from "../HourGrid";
+
+import { sprinkles as s } from "@/styles/sprinkles.css";
 import * as styles from "./WeekView.css";
 
 export function WeekView() {
@@ -54,7 +56,24 @@ export function WeekView() {
 					);
 				})}
 			</div>
-			<HourGrid />
+			<div className={clsx(s({ overflowY: "scroll" }), styles.rowBodyWrapper)}>
+				<div className={s({ position: "relative" })}>
+					<div>
+						<HourGrid />
+					</div>
+					<div className={styles.bodyCols}>
+						{dates.map((d, i, arr) => {
+							if (i < arr.length - 1) {
+								return (
+									<span key={d.toISOString()} className={styles.separator} style={{ gridColumnStart: i + 3 }}></span>
+								);
+							}
+
+							return null;
+						})}
+					</div>
+				</div>
+			</div>
 		</div>
 	);
 }
