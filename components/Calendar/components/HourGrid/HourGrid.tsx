@@ -1,12 +1,28 @@
 import { useEffect, useState } from "react";
-import { addDays, differenceInMinutes, eachHourOfInterval, format, startOfDay } from "date-fns";
+import {
+	addDays,
+	differenceInMinutes,
+	eachHourOfInterval,
+	format,
+	startOfDay,
+} from "date-fns";
 import clsx from "clsx";
 import * as styles from "./HourGrid.css";
 
-function TimeMarker({ date, highlight = false }: { date: Date, highlight?: boolean }) {
+function TimeMarker({
+	date,
+	highlight = false,
+}: {
+	date: Date;
+	highlight?: boolean;
+}) {
 	const hour = format(date, "HH:mm");
 	return (
-		<div className={clsx(styles.timeMarker, { [styles.highlight]: highlight })}>
+		<div
+			className={clsx(styles.timeMarker, {
+				[styles.highlight]: highlight,
+			})}
+		>
 			<time className={styles.time}>{hour}</time>
 			<span className={styles.line}></span>
 		</div>
@@ -43,7 +59,14 @@ function CurrentTimeMarker() {
 	}, [posY]);
 
 	return (
-		<div style={{ position: "absolute", top: `${posY}px`, left: "0px", right: "0px" }}>
+		<div
+			style={{
+				position: "absolute",
+				top: `${posY}px`,
+				left: "0px",
+				right: "0px",
+			}}
+		>
 			<TimeMarker date={markerDate} highlight />
 		</div>
 	);
@@ -59,17 +82,15 @@ export function HourGrid() {
 	});
 
 	return (
-		<div className={styles.overflow}>
-			<div className={styles.grid}>
-				{hours.map((h) => {
-					return (
-						<div key={h.toISOString()} className={styles.row}>
-							<TimeMarker date={h} />
-						</div>
-					);
-				})}
-				<CurrentTimeMarker />
-			</div>
-		</div>
+		<>
+			{hours.map((h) => {
+				return (
+					<div key={h.toISOString()} className={styles.row}>
+						<TimeMarker date={h} />
+					</div>
+				);
+			})}
+			<CurrentTimeMarker />
+		</>
 	);
 }

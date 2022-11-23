@@ -1,15 +1,5 @@
-import { style, styleVariants } from "@vanilla-extract/css";
+import { style } from "@vanilla-extract/css";
 import { vars } from "../../../../styles/theme.css";
-
-export const overflow = style({
-	// TODO: make dynamic
-	height: "calc(100vh - 128px - 41px)",
-	overflowY: "scroll",
-});
-
-export const grid = style({
-	position: "relative",
-});
 
 export const row = style({
 	height: 120,
