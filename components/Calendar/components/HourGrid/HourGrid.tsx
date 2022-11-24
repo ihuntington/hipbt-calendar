@@ -10,6 +10,7 @@ import {
 import clsx from "clsx";
 import { sprinkles as s} from "@/styles/sprinkles.css";
 import * as styles from "./HourGrid.css";
+import { useCalendarContext } from "../../context/CalendarContext";
 
 function TimeMarker({
 	date,
@@ -43,24 +44,8 @@ function getMarkerPosition(date: Date) {
 }
 
 function CurrentTimeMarker() {
-	const delay = 1000;
-	const [posY, setPosY] = useState<number>(getMarkerPosition(new Date()));
-	const markerDate = new Date();
-
-	useEffect(() => {
-		let timeout = setTimeout(function tick() {
-			const y = getMarkerPosition(new Date());
-			if (y !== posY) {
-				setPosY(y);
-			}
-
-			timeout = setTimeout(tick, delay);
-		}, delay);
-
-		return () => {
-			clearTimeout(timeout);
-		};
-	}, [posY]);
+	const { time } = useCalendarContext();
+	const posY = getMarkerPosition(time);
 
 	return (
 		<div
@@ -72,7 +57,7 @@ function CurrentTimeMarker() {
 				zIndex: 2,
 			}}
 		>
-			<TimeMarker date={markerDate} highlight />
+			<TimeMarker date={time} highlight />
 		</div>
 	);
 }

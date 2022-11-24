@@ -1,12 +1,33 @@
-import { startOfDay } from "date-fns";
-import { createContext, PropsWithChildren, useContext, useMemo, useState } from "react";
+import { endOfDay, isSameMinute, startOfDay, startOfMinute } from "date-fns";
+import { createContext, PropsWithChildren, useContext, useEffect, useMemo, useState } from "react";
+
+function getStateFromDate(date: Date) {
+	const dayStart = startOfDay(date);
+	const dayEnd = endOfDay(date);
+	const time = startOfMinute(date);
+	return {
+		date: dayStart,
+		time,
+		dayStart,
+		dayEnd,
+	};
+}
 
 interface ICalendarContext {
 	date: Date;
+	time: Date;
+	dayStart: Date;
+	dayEnd: Date;
+	marker: {
+		posY: number;
+	};
 }
 
 export const CalendarContext = createContext<ICalendarContext>({
-	date: startOfDay(new Date()),
+	...getStateFromDate(new Date()),
+	marker: {
+		posY: 0,
+	},
 });
 
 export const useCalendarContext = () => useContext(CalendarContext);
@@ -25,11 +46,37 @@ export function CalendarProvider({
 	children,
 	date,
 }: PropsWithChildren<ICalendarContext>) {
-	const [state, setState] = useState({ date: startOfDay(date) });
+	const initialState: ICalendarContext = {
+		...getStateFromDate(date),
+		marker: {
+			posY: 0,
+		},
+	};
+	const [state, setState] = useState(initialState);
 
 	const actions = useMemo(() => ({
-		setDate: (date: Date) => setState((s) => ({ ...s, date: startOfDay(date) })),
+		setDate: (date: Date) => setState((s) => ({
+			...s,
+			...getStateFromDate(date),
+		})),
 	}), []);
+
+	useEffect(() => {
+		const delay = 1000;
+		let timeout = setTimeout(function tick() {
+			const nextDate = startOfMinute(new Date());
+
+			if (!isSameMinute(state.date, nextDate)) {
+				actions.setDate(nextDate);
+			}
+
+			timeout = setTimeout(tick, delay);
+		}, delay);
+
+		return () => {
+			clearTimeout(timeout);
+		};
+	}, [state.date, actions]);
 
 	return (
 		<CalendarContext.Provider value={state}>
