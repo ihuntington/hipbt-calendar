@@ -1,36 +1,52 @@
-import { endOfDay, isSameMinute, startOfDay, startOfMinute } from "date-fns";
-import { createContext, PropsWithChildren, useContext, useEffect, useMemo, useState } from "react";
+import {
+	createContext,
+	PropsWithChildren,
+	useContext,
+	useEffect,
+	useMemo,
+	useState,
+} from "react";
+import {
+	endOfDay,
+	endOfWeek,
+	isSameMinute,
+	startOfDay,
+	startOfMinute,
+	startOfWeek,
+} from "date-fns";
 
 function getStateFromDate(date: Date) {
 	const dayStart = startOfDay(date);
 	const dayEnd = endOfDay(date);
-	const time = startOfMinute(date);
 	return {
 		date: dayStart,
-		time,
 		dayStart,
 		dayEnd,
+		weekStart: startOfWeek(date, { weekStartsOn: 1 }),
+		weekEnd: endOfWeek(date, { weekStartsOn: 1 }),
 	};
 }
 
-interface ICalendarContext {
+type CalendarView = "day" | "week" | "month" | "year";
+
+interface ICalendarStateContext {
 	date: Date;
 	time: Date;
 	dayStart: Date;
 	dayEnd: Date;
-	marker: {
-		posY: number;
-	};
+	view: CalendarView;
+	weekStart: Date;
 }
 
-export const CalendarContext = createContext<ICalendarContext>({
+export const CalendarStateContext = createContext<ICalendarStateContext>({
 	...getStateFromDate(new Date()),
-	marker: {
-		posY: 0,
-	},
+	time: startOfMinute(new Date()),
+	view: "week",
 });
 
-export const useCalendarContext = () => useContext(CalendarContext);
+CalendarStateContext.displayName = "CalendarStateContext";
+
+export const useCalendarContext = () => useContext(CalendarStateContext);
 
 interface ICalendarActionContext {
 	setDate: (date: Date) => void;
@@ -40,34 +56,42 @@ export const CalendarActionContext = createContext<
 	ICalendarActionContext | undefined
 >(undefined);
 
+CalendarActionContext.displayName = "CalendarActionContext";
+
 export const useCalendarActionContext = () => useContext(CalendarActionContext);
 
 export function CalendarProvider({
 	children,
 	date,
-}: PropsWithChildren<ICalendarContext>) {
-	const initialState: ICalendarContext = {
+	view = "week",
+}: PropsWithChildren<Pick<ICalendarStateContext, "date" | "view">>) {
+	const initialState: ICalendarStateContext = {
 		...getStateFromDate(date),
-		marker: {
-			posY: 0,
-		},
+		time: startOfMinute(date),
+		view,
 	};
 	const [state, setState] = useState(initialState);
 
-	const actions = useMemo(() => ({
-		setDate: (date: Date) => setState((s) => ({
-			...s,
-			...getStateFromDate(date),
-		})),
-	}), []);
+	const actions = useMemo(
+		() => ({
+			setDate: (date: Date) =>
+				setState((s) => ({
+					...s,
+					...getStateFromDate(date),
+				})),
+			setTime: (date: Date) =>
+				setState((s) => ({ ...s, time: startOfMinute(date) })),
+		}),
+		[]
+	);
 
 	useEffect(() => {
 		const delay = 1000;
 		let timeout = setTimeout(function tick() {
-			const nextDate = startOfMinute(new Date());
+			const nextTime = startOfMinute(new Date());
 
-			if (!isSameMinute(state.date, nextDate)) {
-				actions.setDate(nextDate);
+			if (!isSameMinute(state.time, nextTime)) {
+				actions.setTime(nextTime);
 			}
 
 			timeout = setTimeout(tick, delay);
@@ -76,13 +100,13 @@ export function CalendarProvider({
 		return () => {
 			clearTimeout(timeout);
 		};
-	}, [state.date, actions]);
+	}, [state.time, actions]);
 
 	return (
-		<CalendarContext.Provider value={state}>
+		<CalendarStateContext.Provider value={state}>
 			<CalendarActionContext.Provider value={actions}>
 				{children}
 			</CalendarActionContext.Provider>
-		</CalendarContext.Provider>
+		</CalendarStateContext.Provider>
 	);
 }

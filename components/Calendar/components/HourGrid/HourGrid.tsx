@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import {
 	addDays,
 	getDay,
@@ -6,6 +5,7 @@ import {
 	eachHourOfInterval,
 	format,
 	startOfDay,
+	isSameWeek,
 } from "date-fns";
 import clsx from "clsx";
 import { sprinkles as s} from "@/styles/sprinkles.css";
@@ -44,8 +44,12 @@ function getMarkerPosition(date: Date) {
 }
 
 function CurrentTimeMarker() {
-	const { time } = useCalendarContext();
+	const { date, time } = useCalendarContext();
 	const posY = getMarkerPosition(time);
+
+	if (!isSameWeek(date, time)) {
+		return null;
+	}
 
 	return (
 		<div

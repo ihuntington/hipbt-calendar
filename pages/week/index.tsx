@@ -13,7 +13,7 @@ function Page({ children }: React.PropsWithChildren): React.ReactElement {
 export default function WeekViewIndex() {
 	return (
 		<App>
-			<CalendarProvider date={new Date()}>
+			<CalendarProvider date={new Date()} view="week">
 				<Page>
 					<Flex alignItems="center" justifyContent="spaceBetween" className={styles.header}>
 						<WeekHeader />
