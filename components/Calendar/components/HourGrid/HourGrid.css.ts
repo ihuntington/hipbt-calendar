@@ -17,6 +17,7 @@ export const timeMarker = style({
 	columnGap: "0.5rem",
 	display: "grid",
 	gridTemplateColumns: "[time] 3rem [line-start] repeat(7, 1fr) [line-end]",
+	lineHeight: 1,
 });
 
 export const time = style({
