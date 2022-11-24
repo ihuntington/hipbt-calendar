@@ -1,6 +1,6 @@
 import fetch from "node-fetch";
 import qs from "query-string";
-import { eachDayOfInterval, endOfWeek, formatISO, parseISO, startOfWeek } from "date-fns";
+import { eachDayOfInterval, endOfDay, formatISO, parseISO, startOfDay } from "date-fns";
 
 import type { NextApiRequest, NextApiResponse } from "next";
 
@@ -42,10 +42,10 @@ type CalendarResponse = CalendarSuccessResponse | CalendarBadRequest;
 
 class CalendarService {
     private async request<T>(query: { [K: string]: string }): Promise<T> {
-        const url = "http://localhost:3030";
+        const url = process.env.API_URL as string;
         const response = await fetch(`${url}/scrobbles?${qs.stringify(query)}`, {
             headers: {
-                Authorization: "baosbadbuns",
+                Authorization: process.env.API_AUTH as string,
             }
         });
         const data = await response.json() as T;
@@ -58,15 +58,20 @@ class CalendarService {
 }
 
 export default async function calendar(req: NextApiRequest, res: NextApiResponse<CalendarResponse>) {
-    const { date, username } = req.query as { [K: string]: string };
-    
-    const weekStart = startOfWeek(parseISO(date));
-    const weekEnd = endOfWeek(parseISO(date));
+    const { username, startDate, endDate } = req.query as { [K: string]: string };
+
+	// TODO: replace this with validation library
+	if (req.method === "GET" && (!startDate || !endDate)) {
+		return res.status(400).json({ message: "`startDate` and `endDate` are required" });
+	}
+
+    const start = startOfDay(parseISO(startDate));
+    const end = endOfDay(parseISO(endDate || startDate));
     const range = eachDayOfInterval({
-        start: weekStart,
-        end: weekEnd,
+        start,
+        end,
     });
-    
+
     const cs = new CalendarService();
 
     const data = await Promise.all(range.map((date) => {
