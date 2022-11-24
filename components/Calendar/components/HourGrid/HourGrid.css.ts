@@ -1,18 +1,21 @@
 import { style } from "@vanilla-extract/css";
 import { vars } from "../../../../styles/theme.css";
 
-export const row = style({
+export const hourRow = style({
 	height: 120,
 	selectors: {
-		"&:nth-last-child(-n+2)": {
+		["&:last-child"]: {
 			height: "auto",
 		}
 	}
 });
 
-export const highlight = style({});
+export const currentTime = style({
+	height: "auto",
+});
 
 export const timeMarker = style({
+	alignContent: "flex-start",
 	alignItems: "center",
 	columnGap: "0.5rem",
 	display: "grid",
@@ -25,7 +28,7 @@ export const time = style({
 	gridColumn: "time",
 	textAlign: "right",
 	selectors: {
-		[`${highlight} &`]: {
+		[`${currentTime} &`]: {
 			color: vars.colors.red500,
 		},
 	}
@@ -39,7 +42,7 @@ export const line = style({
 	flex: 1,
 	height: 1,
 	selectors: {
-		[`${highlight} &`]: {
+		[`${currentTime} &`]: {
 			backgroundColor: vars.colors.red500,
 		},
 	}

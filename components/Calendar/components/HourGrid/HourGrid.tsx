@@ -24,7 +24,8 @@ function TimeMarker({
 	return (
 		<div
 			className={clsx(styles.timeMarker, {
-				[styles.highlight]: highlight,
+				[styles.hourRow]: !highlight,
+				[styles.currentTime]: highlight,
 			})}
 		>
 			<time className={styles.time}>{hour}</time>
@@ -77,13 +78,9 @@ export function HourGrid() {
 
 	return (
 		<>
-			{hours.map((h) => {
-				return (
-					<div key={h.toISOString()} className={styles.row}>
-						<TimeMarker date={h} />
-					</div>
-				);
-			})}
+			<div>
+				{hours.map((h) => <TimeMarker key={h.toISOString()} date={h} />)}
+			</div>
 			<CurrentTimeMarker />
 		</>
 	);

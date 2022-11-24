@@ -36,6 +36,7 @@ interface ICalendarStateContext {
 	dayEnd: Date;
 	view: CalendarView;
 	weekStart: Date;
+	weekEnd: Date;
 }
 
 export const CalendarStateContext = createContext<ICalendarStateContext>({

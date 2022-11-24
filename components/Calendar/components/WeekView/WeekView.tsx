@@ -13,6 +13,9 @@ import { HourGrid } from "../HourGrid";
 
 import { sprinkles as s } from "@/styles/sprinkles.css";
 import * as styles from "./WeekView.css";
+import { WeekBody } from "../WeekBody";
+import { WeekDayCols } from "./WeekDayCols";
+import { WeekGrid } from "../WeekGrid";
 
 export function WeekView() {
 	const { date } = useCalendarContext();
@@ -58,20 +61,11 @@ export function WeekView() {
 			</div>
 			<div className={styles.rowBodyWrapper}>
 				<div className={s({ position: "relative" })}>
-					<div>
-						<HourGrid />
-					</div>
-					<div className={styles.bodyCols}>
-						{dates.map((d, i, arr) => {
-							if (i < arr.length - 1) {
-								return (
-									<span key={d.toISOString()} className={styles.separator} style={{ gridColumnStart: i + 3 }}></span>
-								);
-							}
-
-							return null;
-						})}
-					</div>
+					<HourGrid />
+					<WeekDayCols dates={dates} />
+					<WeekGrid>
+						<WeekBody dates={dates} />
+					</WeekGrid>
 				</div>
 			</div>
 		</div>

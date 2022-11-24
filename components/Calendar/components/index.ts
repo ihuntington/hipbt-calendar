@@ -6,3 +6,5 @@ export * from "./TodayButton";
 export * from "./WeekView";
 export * from "./WeekNav";
 export * from "./WeekHeader";
+export * from "./WeekBody";
+export * from "./WeekGrid";
