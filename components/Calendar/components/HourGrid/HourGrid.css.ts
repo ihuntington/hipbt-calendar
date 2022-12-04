@@ -1,26 +1,23 @@
 import { style } from "@vanilla-extract/css";
 import { vars } from "../../../../styles/theme.css";
 
-export const hourRow = style({
-	height: 120,
-	selectors: {
-		["&:last-child"]: {
-			height: "auto",
-		}
-	}
-});
-
-export const currentTime = style({
-	height: "auto",
-});
-
-export const timeMarker = style({
+export const row = style({
 	alignContent: "flex-start",
 	alignItems: "center",
 	columnGap: "0.5rem",
 	display: "grid",
 	gridTemplateColumns: "[time] 3rem [line-start] repeat(7, 1fr) [line-end]",
+	height: 120,
 	lineHeight: 1,
+	pointerEvents: "none",
+});
+
+export const highlight = style([row, {
+	height: "auto",
+}]);
+
+export const collapse = style({
+	height: "auto",
 });
 
 export const time = style({
@@ -28,7 +25,7 @@ export const time = style({
 	gridColumn: "time",
 	textAlign: "right",
 	selectors: {
-		[`${currentTime} &`]: {
+		[`${highlight} &`]: {
 			color: vars.colors.red500,
 		},
 	}
@@ -42,7 +39,7 @@ export const line = style({
 	flex: 1,
 	height: 1,
 	selectors: {
-		[`${currentTime} &`]: {
+		[`${highlight} &`]: {
 			backgroundColor: vars.colors.red500,
 		},
 	}

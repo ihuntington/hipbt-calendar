@@ -1,3 +1,4 @@
+import { formatISO } from "date-fns";
 import fetch from "node-fetch";
 import qs from "query-string";
 
@@ -38,18 +39,25 @@ export type CalendarBadRequest = {
 export type CalendarResponse = CalendarSuccessResponse | CalendarBadRequest;
 
 export class CalendarService {
-    private async request<T>(query: { [K: string]: string }): Promise<T> {
+    private async request(query: { [K: string]: string }) {
         const url = process.env.API_URL as string;
         const response = await fetch(`${url}/scrobbles?${qs.stringify(query)}`, {
             headers: {
                 Authorization: process.env.API_AUTH as string,
             }
         });
-        const data = await response.json() as T;
-        return data;
+        return response.json();
     }
 
     async getEventsByDate(date: string, username: string) {
-        return await this.request<CalendarSuccessResponse>({ date, username });
+        return this.request({ date, username }) as Promise<CalendarSuccessResponse>;
     }
+
+	async getEvents(username: string, startDate: Date, endDate: Date) {
+		return this.request({
+			startDate: formatISO(startDate, { representation: "date" }),
+			endDate: formatISO(endDate, { representation: "date" }),
+			username,
+		}) as Promise<CalendarSuccessResponse>;
+	}
 }

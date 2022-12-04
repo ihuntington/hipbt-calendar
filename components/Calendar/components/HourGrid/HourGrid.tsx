@@ -13,24 +13,27 @@ import * as styles from "./HourGrid.css";
 import { useCalendarContext } from "../../context/CalendarContext";
 
 function TimeMarker({
+	collapse = false,
 	date,
 	highlight = false,
 }: {
+	collapse?: boolean;
 	date: Date;
 	highlight?: boolean;
 }) {
 	const hour = format(date, "HH:mm");
+	// TODO: highlight marker is appearing in wrong column
 	const dayIndex = getDay(date);
 	return (
 		<div
-			className={clsx(styles.timeMarker, {
-				[styles.hourRow]: !highlight,
-				[styles.currentTime]: highlight,
+			className={clsx(styles.row, {
+				[styles.highlight]: highlight,
+				[styles.collapse]: collapse,
 			})}
 		>
 			<time className={styles.time}>{hour}</time>
 			<span className={styles.line}></span>
-			{highlight && <span className={styles.marker} style={{gridColumn: dayIndex + 1}}></span>}
+			{highlight && <span className={styles.marker} style={{ gridColumn: dayIndex + 2 }}></span>}
 		</div>
 	);
 }
@@ -77,11 +80,9 @@ export function HourGrid() {
 	});
 
 	return (
-		<>
-			<div>
-				{hours.map((h) => <TimeMarker key={h.toISOString()} date={h} />)}
-			</div>
+		<div data-layer="hour-grid">
+			{hours.map((h, index, arr) => <TimeMarker key={h.toISOString()} date={h} collapse={index === arr.length - 1} />)}
 			<CurrentTimeMarker />
-		</>
+		</div>
 	);
 }

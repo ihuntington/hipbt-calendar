@@ -9,16 +9,21 @@ import {
 	addMilliseconds,
 	addMinutes,
 	differenceInMinutes,
+	format as f,
+	isSameDay,
+	parseISO,
 	startOfDay,
 } from "date-fns";
 
 const format = formatISOWithOptions({ representation: "date" });
+
 
 // TODO: revert back to being an array of events because if there are more than
 // one event on the same day this current approach will not work. Or group events by day.
 type IEvents = Record<string, IEvent>;
 
 interface IEvent {
+	iso_date: string;
 	date: string;
 	start_time: string;
 	end_time: string;
@@ -26,27 +31,33 @@ interface IEvent {
 	total: number;
 }
 
-export function CalendarEvent({ event }: { event: IEvent }) {
+export function CalendarEvent({ event, dates }: { event: IEvent; dates: Date[] }) {
+	const eventDate = startOfDay(parseISO(event.iso_date));
+	const weekDayIndex = dates.findIndex((d) => isSameDay(d, eventDate));
+
 	const multiplier = 2;
-	const dateStart = startOfDay(new Date(event.start_time));
-	const diff = differenceInMinutes(new Date(event.start_time), dateStart);
-	const yh = Math.floor(diff / 60) * 60 * multiplier;
-	const ym = (diff % 60) * multiplier;
+	const startTime = new Date(event.start_time);
+
+	const eventStartOffset = differenceInMinutes(startTime, startOfDay(startTime));
+	const yh = Math.floor(eventStartOffset / 60) * 60 * multiplier;
+	const ym = (eventStartOffset % 60) * multiplier;
 	const posY = yh + ym;
 
 	const ms = event.items.reduce((prev, current) => {
 		return prev + current.track.duration_ms;
 	}, 0);
-	console.log({ ms: ms / 1000 });
-	const startTime = new Date(event.start_time);
-	const endDiff = differenceInMinutes(
+
+	const eventEndOffset = differenceInMinutes(
 		addMilliseconds(startTime, ms),
 		startTime
 	);
-	const hh = Math.floor(endDiff / 60) * 60 * multiplier;
-	const hm = (endDiff % 60) * multiplier;
+	const hh = Math.floor(eventEndOffset / 60) * 60 * multiplier;
+	const hm = (eventEndOffset % 60) * multiplier;
 	const height = Math.ceil(hh + hm);
-	console.log({ endDiff, hh, hm, height });
+
+	const handleClick = () => {
+		console.log(event)
+	};
 
 	return (
 		<div
@@ -57,16 +68,20 @@ export function CalendarEvent({ event }: { event: IEvent }) {
 				lineHeight: 1,
 				background: "pink",
 				width: "100%",
+				gridRowStart: 1,
+				gridColumnStart: weekDayIndex + 2,
+				gridColumnEnd: weekDayIndex + 2
 			}}
+			onClick={handleClick}
 		>
-			Some listening here
+			{`${f(startTime, "H:mm")} - ${f(addMinutes(startTime, eventEndOffset), "H:mm")}`}
 		</div>
 	);
 }
 
 export function WeekBody({ dates }: { dates: Date[] }) {
 	const { weekStart, weekEnd } = useCalendarContext();
-	const [state, setState] = useState<IEvents>({});
+	const [state, setState] = useState<IEvent[]>([]);
 
 	// TODO: move out of component and replace with TanQuery or some other state
 	// management solution
@@ -80,9 +95,9 @@ export function WeekBody({ dates }: { dates: Date[] }) {
 				endDate,
 			});
 			const response = await fetch(`/api/week?${query}`);
-			const data = (await response.json()) as { events: IEvents };
+			const data = (await response.json()) as IEvents;
 
-			setState(data.events);
+			setState(Object.values(data));
 		};
 
 		getEvents();
@@ -90,18 +105,18 @@ export function WeekBody({ dates }: { dates: Date[] }) {
 
 	return (
 		<>
-			{dates.map((d, i) => {
-				const date = format(d);
-				const event = state[date];
-				return (
-					<div
-						key={d.toISOString()}
-						className={s({ position: "relative" })}
-						style={{ gridColumnStart: i + 2 }}
-					>
-						{event ? <CalendarEvent event={event} /> : null}
-					</div>
-				);
+			{state.map((item) => {
+
+				return <CalendarEvent key={item.start_time} event={item} dates={dates} />
+
+				// return (
+				// 	<div
+				// 		key={item.start_time}
+				// 		className={s({ position: "relative" })}
+				// 	>
+				// 		<CalendarEvent event={item} />
+				// 	</div>
+				// )
 			})}
 		</>
 	);
