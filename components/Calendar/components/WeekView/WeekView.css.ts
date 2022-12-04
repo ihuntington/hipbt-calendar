@@ -74,7 +74,7 @@ export const rowHeader = style({
 	left: 0,
 	right: 0,
 	marginInline: "1rem",
-	zIndex: 1,
+	zIndex: 3,
 });
 
 // TODO: make dynamic

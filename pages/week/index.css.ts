@@ -15,11 +15,10 @@ export const header = style({
 	left: 0,
 	top: 0,
 	right: 0,
-	zIndex: 1,
+	zIndex: 3,
 });
 
 export const footer = style([header, {
 	bottom: 0,
 	top: "unset",
-	zIndex: 2,
 }]);
