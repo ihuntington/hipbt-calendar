@@ -1,42 +1,13 @@
 import {
 	addDays,
-	getDay,
 	differenceInMinutes,
 	eachHourOfInterval,
-	format,
 	startOfDay,
 	isSameWeek,
 } from "date-fns";
-import clsx from "clsx";
 import { sprinkles as s} from "@/styles/sprinkles.css";
-import * as styles from "./HourGrid.css";
 import { useCalendarContext } from "../../context/CalendarContext";
-
-function TimeMarker({
-	collapse = false,
-	date,
-	highlight = false,
-}: {
-	collapse?: boolean;
-	date: Date;
-	highlight?: boolean;
-}) {
-	const hour = format(date, "HH:mm");
-	// TODO: highlight marker is appearing in wrong column
-	const dayIndex = getDay(date);
-	return (
-		<div
-			className={clsx(styles.row, {
-				[styles.highlight]: highlight,
-				[styles.collapse]: collapse,
-			})}
-		>
-			<time className={styles.time}>{hour}</time>
-			<span className={styles.line}></span>
-			{highlight && <span className={styles.marker} style={{ gridColumn: dayIndex + 2 }}></span>}
-		</div>
-	);
-}
+import { HourRow } from "./HourRow";
 
 function getMarkerPosition(date: Date) {
 	const multiplier = 2;
@@ -65,7 +36,7 @@ function CurrentTimeMarker() {
 				zIndex: 2,
 			}}
 		>
-			<TimeMarker date={time} highlight />
+			<HourRow date={time} highlight />
 		</div>
 	);
 }
@@ -81,7 +52,7 @@ export function HourGrid() {
 
 	return (
 		<div data-layer="hour-grid">
-			{hours.map((h, index, arr) => <TimeMarker key={h.toISOString()} date={h} collapse={index === arr.length - 1} />)}
+			{hours.map((h, index, arr) => <HourRow key={h.toISOString()} date={h} collapse={index === arr.length - 1} />)}
 			<CurrentTimeMarker />
 		</div>
 	);
