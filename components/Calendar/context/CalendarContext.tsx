@@ -87,6 +87,10 @@ export function CalendarProvider({
 	);
 
 	useEffect(() => {
+		actions.setDate(date);
+	}, [date, actions]);
+
+	useEffect(() => {
 		const delay = 1000;
 		let timeout = setTimeout(function tick() {
 			const nextTime = startOfMinute(new Date());

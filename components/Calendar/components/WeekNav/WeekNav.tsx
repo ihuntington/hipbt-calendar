@@ -1,35 +1,26 @@
-import { addWeeks, startOfDay } from "date-fns";
-import { Button } from "../../../Button";
+import { addWeeks, format, startOfDay } from "date-fns";
+import Link from "next/link";
 import { Flex } from "../../../Flex";
-import { useCalendarActionContext, useCalendarContext } from "../../context/CalendarContext";
+import { useCalendarContext } from "../../context/CalendarContext";
 
 import * as styles from "./WeekNav.css";
 
+function formatCalendarPath(date: Date) {
+	return `/calendar/week/${format(date, "yyyy/MM/dd")}`;
+}
+
 export function WeekNav() {
-	const actions = useCalendarActionContext();
 	const { date } = useCalendarContext();
 
-	const setDate = (date: Date) => {
-		actions?.setDate(date);
-	};
-
-	const nextWeek = () => {
-		setDate(addWeeks(date, 1));
-	};
-
-	const previousWeek = () => {
-		setDate(addWeeks(date, -1));
-	};
-
-	const today = () => {
-		setDate(startOfDay(new Date()));
-	};
+	const previousWeek = formatCalendarPath(addWeeks(date, -1));
+	const today = formatCalendarPath(startOfDay(new Date()));
+	const nextWeek = formatCalendarPath(addWeeks(date, 1));
 
 	return (
 		<Flex className={styles.root}>
-			<Button type="button" onClick={previousWeek}>Previous</Button>
-			<Button type="button" onClick={today}>Today</Button>
-			<Button type="button" onClick={nextWeek}>Next</Button>
+			<Link href={previousWeek}>Previous</Link>
+			<Link href={today}>Today</Link>
+			<Link href={nextWeek}>Next</Link>
 		</Flex>
 	);
 }
