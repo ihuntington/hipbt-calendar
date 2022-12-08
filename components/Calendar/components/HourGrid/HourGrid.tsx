@@ -41,12 +41,9 @@ function CurrentTimeMarker() {
 	);
 }
 
-export function HourGrid() {
-	// Hard code a date to generate a grid of hours for the day does not need to
-	// consume state at the moment
-	const date = startOfDay(new Date());
+export function HourGrid({ date }: { date: Date }) {
 	const hours = eachHourOfInterval({
-		start: date,
+		start: startOfDay(date),
 		end: addDays(date, 1),
 	});
 

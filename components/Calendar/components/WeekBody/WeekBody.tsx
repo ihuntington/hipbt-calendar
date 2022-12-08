@@ -6,6 +6,7 @@ import { Play } from "@/services/calendar";
 import clsx from "clsx";
 import { sprinkles as s } from "@/styles/sprinkles.css";
 import {
+	addDays,
 	addMilliseconds,
 	addMinutes,
 	differenceInMinutes,
@@ -79,20 +80,20 @@ export function CalendarEvent({ event, dates }: { event: IEvent; dates: Date[] }
 	);
 }
 
-export function WeekBody({ dates }: { dates: Date[] }) {
+export function WeekBody({ dates }: { dates: Date[]; }) {
 	const { weekStart, weekEnd } = useCalendarContext();
 	const [state, setState] = useState<IEvent[]>([]);
+	const ws = format(weekStart)
+	const we = format(addDays(weekEnd, 1))
 
 	// TODO: move out of component and replace with TanQuery or some other state
 	// management solution
 	useEffect(() => {
 		const getEvents = async () => {
-			const startDate = format(weekStart);
-			const endDate = format(weekEnd);
 			const query = qs.stringify({
 				username: "ian",
-				startDate,
-				endDate,
+				startDate: ws,
+				endDate: we,
 			});
 			const response = await fetch(`/api/week?${query}`);
 			const data = (await response.json()) as IEvents;
@@ -101,23 +102,11 @@ export function WeekBody({ dates }: { dates: Date[] }) {
 		};
 
 		getEvents();
-	}, [weekStart, weekEnd]);
+	}, [ws, we]);
 
 	return (
 		<>
-			{state.map((item) => {
-
-				return <CalendarEvent key={item.start_time} event={item} dates={dates} />
-
-				// return (
-				// 	<div
-				// 		key={item.start_time}
-				// 		className={s({ position: "relative" })}
-				// 	>
-				// 		<CalendarEvent event={item} />
-				// 	</div>
-				// )
-			})}
+			{state.map((item) => <CalendarEvent key={item.start_time} event={item} dates={dates} />)}
 		</>
 	);
 }

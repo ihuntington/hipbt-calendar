@@ -7,6 +7,7 @@ import {
 	isToday,
 	getISOWeek,
 	isSameWeek,
+	startOfDay,
 } from "date-fns";
 import { useCalendarContext } from "../../context/CalendarContext";
 import { HourGrid } from "../HourGrid";
@@ -61,7 +62,7 @@ export function WeekView() {
 			</div>
 			<div className={styles.rowBodyWrapper}>
 				<div className={s({ position: "relative" })}>
-					<HourGrid />
+					<HourGrid date={startOfDay(new Date())} />
 					<WeekDayCols dates={dates} />
 					<WeekGrid>
 						<WeekBody dates={dates} />
