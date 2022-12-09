@@ -18,9 +18,9 @@ export function WeekNav() {
 
 	return (
 		<Flex className={styles.root}>
-			<Link href={previousWeek}>Previous</Link>
-			<Link href={today}>Today</Link>
-			<Link href={nextWeek}>Next</Link>
+			<Link href={previousWeek} scroll={false}>Previous</Link>
+			<Link href={today} scroll={false}>Today</Link>
+			<Link href={nextWeek} scroll={false}>Next</Link>
 		</Flex>
 	);
 }
