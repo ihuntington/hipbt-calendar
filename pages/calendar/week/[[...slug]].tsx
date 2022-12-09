@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { App, Flex } from "../../../components";
 import { CalendarProvider } from "../../../components/Calendar/context/CalendarContext";
-import { WeekHeader, WeekNav, WeekView } from "../../../components/Calendar/components";
+import { MonthYearTitle, WeekNav, WeekView } from "../../../components/Calendar/components";
 import { useInitialDate } from "@/components/Calendar/hooks/useInitialDate";
 
 import "@/styles/global.css";
@@ -26,7 +26,7 @@ export default function WeekViewIndex() {
 			<CalendarProvider date={calendar.date} view="week">
 				<Page>
 					<Flex alignItems="center" justifyContent="spaceBetween" className={styles.header}>
-						<WeekHeader />
+						<MonthYearTitle />
 						<WeekNav />
 					</Flex>
 					<WeekView />
