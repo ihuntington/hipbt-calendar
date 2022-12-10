@@ -10,11 +10,13 @@ import {
 	addMilliseconds,
 	addMinutes,
 	differenceInMinutes,
+	eachDayOfInterval,
 	format as f,
 	isSameDay,
 	parseISO,
 	startOfDay,
 } from "date-fns";
+import { WeekGrid } from "../WeekGrid";
 
 const format = formatISOWithOptions({ representation: "date" });
 
@@ -80,18 +82,22 @@ export function CalendarEvent({ event, dates }: { event: IEvent; dates: Date[] }
 	);
 }
 
-export function WeekBody({ dates }: { dates: Date[]; }) {
+export function WeekBody() {
 	const { weekStart, weekEnd } = useCalendarContext();
 	const [state, setState] = useState<IEvent[]>([]);
 	const ws = format(weekStart)
 	const we = format(addDays(weekEnd, 1))
+	const dates = eachDayOfInterval({
+		start: weekStart,
+		end: weekEnd,
+	});
 
 	// TODO: move out of component and replace with TanQuery or some other state
 	// management solution
 	useEffect(() => {
 		const getEvents = async () => {
 			const query = qs.stringify({
-				username: "ian",
+				username: "fingersmcgee",
 				startDate: ws,
 				endDate: we,
 			});
@@ -105,8 +111,8 @@ export function WeekBody({ dates }: { dates: Date[]; }) {
 	}, [ws, we]);
 
 	return (
-		<>
+		<WeekGrid>
 			{state.map((item) => <CalendarEvent key={item.start_time} event={item} dates={dates} />)}
-		</>
+		</WeekGrid>
 	);
 }

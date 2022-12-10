@@ -8,3 +8,4 @@ export * from "./WeekNav";
 export * from "./MonthYearTitle";
 export * from "./WeekBody";
 export * from "./WeekGrid";
+export * from "./WeekHeader";
