@@ -53,9 +53,9 @@ interface ICalendarActionContext {
 	setDate: (date: Date) => void;
 }
 
-export const CalendarActionContext = createContext<
-	ICalendarActionContext | undefined
->(undefined);
+export const CalendarActionContext = createContext<ICalendarActionContext>({
+	setDate: () => {},
+});
 
 CalendarActionContext.displayName = "CalendarActionContext";
 
@@ -64,11 +64,12 @@ export const useCalendarActionContext = () => useContext(CalendarActionContext);
 export function CalendarProvider({
 	children,
 	date,
+	time,
 	view = "week",
-}: PropsWithChildren<Pick<ICalendarStateContext, "date" | "view">>) {
+}: PropsWithChildren<Pick<ICalendarStateContext, "date" | "time" | "view">>) {
 	const initialState: ICalendarStateContext = {
 		...getStateFromDate(date),
-		time: startOfMinute(date),
+		time: startOfMinute(time),
 		view,
 	};
 	const [state, setState] = useState(initialState);
@@ -85,10 +86,6 @@ export function CalendarProvider({
 		}),
 		[]
 	);
-
-	useEffect(() => {
-		actions.setDate(date);
-	}, [date, actions]);
 
 	useEffect(() => {
 		const delay = 1000;

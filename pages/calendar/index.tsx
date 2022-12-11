@@ -18,7 +18,7 @@ function Block({ children }: PropsWithChildren) {
 export default function CalendarIndex() {
 	return (
 		<App>
-			<CalendarProvider date={new Date()}>
+			<CalendarProvider date={new Date()} time={new Date()} view="month">
 				<Page>
 					<Block>
 						<MonthNav />
