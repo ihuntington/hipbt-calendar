@@ -1,9 +1,9 @@
+import { useQuery } from "@tanstack/react-query";
 import { formatISOWithOptions } from "date-fns/fp";
-import { useEffect, useState } from "react";
 import qs from "query-string";
+import clsx from "clsx";
 import { useCalendarContext } from "../../context/CalendarContext";
 import { Play } from "@/services/calendar";
-import clsx from "clsx";
 import { sprinkles as s } from "@/styles/sprinkles.css";
 import {
 	addDays,
@@ -84,35 +84,38 @@ export function CalendarEvent({ event, dates }: { event: IEvent; dates: Date[] }
 
 export function WeekBody() {
 	const { weekStart, weekEnd } = useCalendarContext();
-	const [state, setState] = useState<IEvent[]>([]);
 	const ws = format(weekStart)
 	const we = format(addDays(weekEnd, 1))
+	const { data, isLoading, isError } = useQuery({
+		queryKey: ["week", ws, we],
+		queryFn: async () => {
+			const query = qs.stringify({
+				username: "ian",
+				startDate: ws,
+				endDate: we,
+			});
+			const response = await fetch(`/api/week?${query}`);
+			if (!response.ok) {
+				throw new Error("Could not fetch events for week")
+			}
+			return response.json() as Promise<IEvents>;
+		},
+		initialData: {}
+	})
+
+	// TODO: handle the error
+	if (isLoading || isError) {
+		return null;
+	}
+
 	const dates = eachDayOfInterval({
 		start: weekStart,
 		end: weekEnd,
 	});
 
-	// TODO: move out of component and replace with TanQuery or some other state
-	// management solution
-	useEffect(() => {
-		const getEvents = async () => {
-			const query = qs.stringify({
-				username: "fingersmcgee",
-				startDate: ws,
-				endDate: we,
-			});
-			const response = await fetch(`/api/week?${query}`);
-			const data = (await response.json()) as IEvents;
-
-			setState(Object.values(data));
-		};
-
-		getEvents();
-	}, [ws, we]);
-
 	return (
 		<WeekGrid>
-			{state.map((item) => <CalendarEvent key={item.start_time} event={item} dates={dates} />)}
+			{Object.values(data).map((item) => <CalendarEvent key={item.start_time} event={item} dates={dates} />)}
 		</WeekGrid>
 	);
 }
