@@ -22,33 +22,6 @@ type Event = {
 	items: Play[];
 }
 
-// function (current: Date, previous: Date, ms = 0) {
-// 	return Math.abs(differenceInMinutes(previous, current)) > 15;
-// }
-
-// TODO: Refactor function as somewhat messy
-// Return an array of elevents grouped by day rather than object by day
-/* Example:
-{
-	events: {
-		"2022-01-01": [
-			{
-				date: "2022-01-01T00:00:00z",
-				items: [],
-				startTime: a
-				endTime: b
-			},
-			{
-				date: "2022-01-01T01:00:00z"
-				items: [],
-				startTime: c
-				endTime: d
-			}
-		]
-	}
-}
- */
-
 function createEvent(item: Play): Event {
 	const playedAt = parseISO(item.played_at);
 	const isoDate = formatISO(playedAt);
@@ -79,8 +52,8 @@ export default async function week(req: NextApiRequest, res: NextApiResponse) {
 	const start = parseISO(startDate);
 	const end = endOfDay(parseISO(endDate || startDate));
 
-	const cs = new CalendarService();
-	const data = await cs.getEvents(username, start, end);
+	const calendar = new CalendarService();
+	const data = await calendar.getEvents(username, start, end);
 
 	const result: { [K: string]: Event } = {};
 
