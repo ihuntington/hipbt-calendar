@@ -1,20 +1,18 @@
-import { addMilliseconds, differenceInMinutes, eachDayOfInterval, endOfDay, formatISO, isSameDay } from "date-fns";
-import { zipObj, compose, pipe } from "rambda";
+import { addMilliseconds, differenceInMinutes, endOfDay } from "date-fns";
+import { formatISOWithOptions, parseISOWithOptions } from "date-fns/fp";
 import { CalendarService, Play } from "../../services";
 
 import type { NextApiRequest, NextApiResponse } from "next";
-import { formatISOWithOptions, parseISOWithOptions, startOfDay } from "date-fns/fp";
 
 // TODO: temporary workaround until I can correct the data. Also, used in the main
 // website and should be corrected there too.
 // @see https://github.com/ihuntington/haveiplayedbowie/blob/main/app/src/routes/diary.js
 const FALLBACK_TRACK_DURATION_MS = 1000 * 60 * 3;
 
-type Plays = Play[];
-type Events = Plays[];
+const MINUTES_BETWEEN_EVENTS = 15;
 
-// type EventsGroup = Record<string, Events>;
-type EventsGroup = { [K: string]: Plays[] };
+const parseISO = parseISOWithOptions({ additionalDigits: 2 });
+const formatISO = formatISOWithOptions({ representation: "date" });
 
 type Event = {
 	iso_date: string;
@@ -50,10 +48,27 @@ type Event = {
 	}
 }
  */
-export default async function week(req: NextApiRequest, res: NextApiResponse) {
-	const parseISO = parseISOWithOptions({ additionalDigits: 2 });
-	const formatISO = formatISOWithOptions({ representation: "date" });
 
+function createEvent(item: Play): Event {
+	const playedAt = parseISO(item.played_at);
+	const isoDate = formatISO(playedAt);
+
+	return {
+		iso_date: isoDate,
+		date: playedAt,
+		items: [item],
+		start_time: playedAt,
+		end_time: addMilliseconds(playedAt, item.track.duration_ms || FALLBACK_TRACK_DURATION_MS),
+	}
+}
+
+function getMinutesBetweenPlays(previousPlay: Play, currentPlay: Play) {
+	const previousStartTime = parseISO(previousPlay.played_at);
+	const previousEndTime = addMilliseconds(previousStartTime, previousPlay.track.duration_ms || FALLBACK_TRACK_DURATION_MS);
+	return Math.abs(differenceInMinutes(previousEndTime, parseISO(currentPlay.played_at)));
+}
+
+export default async function week(req: NextApiRequest, res: NextApiResponse) {
 	const { username, startDate, endDate } = req.query as { [K: string]: string };
 
 	// TODO: replace this with validation library
@@ -73,47 +88,36 @@ export default async function week(req: NextApiRequest, res: NextApiResponse) {
 
 	data.items.forEach((item, index, arr) => {
 		const playedAt = parseISO(item.played_at);
-		const isoDate = formatISO(playedAt);
 
 		if (index === 0) {
-			result[item.played_at] = {
-				iso_date: isoDate,
-				date: playedAt,
-				items: [item],
-				start_time: playedAt,
-				end_time: addMilliseconds(playedAt, item.track.duration_ms || FALLBACK_TRACK_DURATION_MS),
-			};
+			const event = createEvent(item);
+
+			result[item.played_at] = event;
+
 			currentDate = item.played_at;
 
 			return;
 		}
 
-		const previous = arr[index - 1];
-		const previousStartTime = parseISO(previous.played_at);
-		const previousEndTime = addMilliseconds(previousStartTime, previous.track.duration_ms || FALLBACK_TRACK_DURATION_MS);
-		const diff = Math.abs(differenceInMinutes(previousEndTime, playedAt));
+		const diff = getMinutesBetweenPlays(arr[index - 1], item);
 
 		// TODO: assign 15 to a global somewhere
-		if (diff < 15) {
-			const r = result[currentDate];
+		if (diff < MINUTES_BETWEEN_EVENTS) {
+			const events = result[currentDate];
 
-			if (r) {
+			if (events) {
 				result[currentDate] = {
-					...r,
-					items: [...r.items, item],
+					...events,
+					items: [...events.items, item],
 					end_time: addMilliseconds(playedAt, item.track.duration_ms || FALLBACK_TRACK_DURATION_MS),
 				};
+
 				return;
 			}
 		}
 
-		result[item.played_at] = {
-			iso_date: isoDate,
-			date: playedAt,
-			items: [item],
-			start_time: playedAt,
-			end_time: addMilliseconds(parseISO(item.played_at), item.track.duration_ms || FALLBACK_TRACK_DURATION_MS),
-		};
+		result[item.played_at] = createEvent(item)
+
 		currentDate = item.played_at;
 	});
 
