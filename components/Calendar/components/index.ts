@@ -1,5 +1,6 @@
 export * from "./DayCell";
 export * from "./DaysOfWeek";
+export * from "./CalendarEvent";
 export * from "./HourGrid";
 export * from "./MonthNav";
 export * from "./TodayButton";
