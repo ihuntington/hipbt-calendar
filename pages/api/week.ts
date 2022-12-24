@@ -5,6 +5,11 @@ import { CalendarService, Play } from "../../services";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { formatISOWithOptions, parseISOWithOptions, startOfDay } from "date-fns/fp";
 
+// TODO: temporary workaround until I can correct the data. Also, used in the main
+// website and should be corrected there too.
+// @see https://github.com/ihuntington/haveiplayedbowie/blob/main/app/src/routes/diary.js
+const FALLBACK_TRACK_DURATION_MS = 1000 * 60 * 3;
+
 type Plays = Play[];
 type Events = Plays[];
 
@@ -76,7 +81,7 @@ export default async function week(req: NextApiRequest, res: NextApiResponse) {
 				date: playedAt,
 				items: [item],
 				start_time: playedAt,
-				end_time: addMilliseconds(playedAt, item.track.duration_ms),
+				end_time: addMilliseconds(playedAt, item.track.duration_ms || FALLBACK_TRACK_DURATION_MS),
 			};
 			currentDate = item.played_at;
 
@@ -85,7 +90,7 @@ export default async function week(req: NextApiRequest, res: NextApiResponse) {
 
 		const previous = arr[index - 1];
 		const previousStartTime = parseISO(previous.played_at);
-		const previousEndTime = addMilliseconds(previousStartTime, previous.track.duration_ms);
+		const previousEndTime = addMilliseconds(previousStartTime, previous.track.duration_ms || FALLBACK_TRACK_DURATION_MS);
 		const diff = Math.abs(differenceInMinutes(previousEndTime, playedAt));
 
 		// TODO: assign 15 to a global somewhere
@@ -96,7 +101,7 @@ export default async function week(req: NextApiRequest, res: NextApiResponse) {
 				result[currentDate] = {
 					...r,
 					items: [...r.items, item],
-					end_time: addMilliseconds(playedAt, item.track.duration_ms),
+					end_time: addMilliseconds(playedAt, item.track.duration_ms || FALLBACK_TRACK_DURATION_MS),
 				};
 				return;
 			}
@@ -107,7 +112,7 @@ export default async function week(req: NextApiRequest, res: NextApiResponse) {
 			date: playedAt,
 			items: [item],
 			start_time: playedAt,
-			end_time: addMilliseconds(parseISO(item.played_at), item.track.duration_ms),
+			end_time: addMilliseconds(parseISO(item.played_at), item.track.duration_ms || FALLBACK_TRACK_DURATION_MS),
 		};
 		currentDate = item.played_at;
 	});
