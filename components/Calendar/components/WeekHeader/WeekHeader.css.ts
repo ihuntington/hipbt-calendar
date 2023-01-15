@@ -5,7 +5,7 @@ export const currentWeek = style({});
 
 export const count = style({
 	display: "flex",
-	placeContent: "end",
+	placeContent: "flex-end",
 	placeItems: "center",
 	width: "3rem",
 
