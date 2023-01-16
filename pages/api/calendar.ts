@@ -1,10 +1,10 @@
 import { eachDayOfInterval, endOfDay, formatISO, parseISO, startOfDay } from "date-fns";
-import { CalendarService } from "../../services";
+import { Bowie } from "lib/bowie";
 
 import type { NextApiRequest, NextApiResponse } from "next";
-import type { CalendarResponse } from "../../services";
+import type { PlaysResponse } from "lib/bowie";
 
-export default async function calendar(req: NextApiRequest, res: NextApiResponse<CalendarResponse>) {
+export default async function calendar(req: NextApiRequest, res: NextApiResponse<PlaysResponse>) {
     const { username, startDate, endDate } = req.query as { [K: string]: string };
 
 	// TODO: replace this with validation library
@@ -19,11 +19,11 @@ export default async function calendar(req: NextApiRequest, res: NextApiResponse
         end,
     });
 
-    const cs = new CalendarService();
+    const cs = new Bowie();
 
     const data = await Promise.all(range.map((date) => {
         const formattedDate = formatISO(date, { representation: "date" });
-        return cs.getEventsByDate(formattedDate, username);
+        return cs.getPlaysByDate(formattedDate, username);
     }));
 
     const dateRangeItems = data.flatMap((d) => d.items);

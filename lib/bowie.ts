@@ -27,18 +27,18 @@ export type Play = {
     track: Track;
 }
 
-export type CalendarSuccessResponse = {
+export type PlaysSuccessResponse = {
     items: Play[];
     total: number;
 }
 
-export type CalendarBadRequest = {
+export type PlaysBadRequest = {
     message: string;
 }
 
-export type CalendarResponse = CalendarSuccessResponse | CalendarBadRequest;
+export type PlaysResponse = PlaysSuccessResponse | PlaysBadRequest;
 
-export class CalendarService {
+export class Bowie {
     private async request(query: { [K: string]: string }) {
         const url = process.env.API_URL as string;
         const response = await fetch(`${url}/scrobbles?${qs.stringify(query)}`, {
@@ -49,15 +49,15 @@ export class CalendarService {
         return response.json();
     }
 
-    async getEventsByDate(date: string, username: string) {
-        return this.request({ date, username }) as Promise<CalendarSuccessResponse>;
+    async getPlaysByDate(date: string, username: string) {
+        return this.request({ date, username }) as Promise<PlaysSuccessResponse>;
     }
 
-	async getEvents(username: string, startDate: Date, endDate: Date) {
+	async getPlays(username: string, startDate: Date, endDate: Date) {
 		return this.request({
 			startDate: formatISO(startDate, { representation: "date" }),
 			endDate: formatISO(endDate, { representation: "date" }),
 			username,
-		}) as Promise<CalendarSuccessResponse>;
+		}) as Promise<PlaysSuccessResponse>;
 	}
 }

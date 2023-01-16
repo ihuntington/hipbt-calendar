@@ -6,7 +6,7 @@ import {
 	startOfDay,
 } from "date-fns";
 import formatWithOptions from "date-fns/fp/formatWithOptions";
-import { Play } from "@/services/calendar";
+import { Play } from "lib/bowie";
 import { sprinkles as s } from "@/styles/sprinkles.css";
 
 export interface IEvent {

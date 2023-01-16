@@ -1,8 +1,10 @@
 import { addMilliseconds, differenceInMinutes, endOfDay } from "date-fns";
 import { formatISOWithOptions, parseISOWithOptions } from "date-fns/fp";
-import { CalendarService, Play } from "../../services";
+import { Bowie, Play } from "lib/bowie";
+import { Spotify } from "lib/spotify";
 
 import type { NextApiRequest, NextApiResponse } from "next";
+import { getTracks, setTracks } from "lib/redis";
 
 // TODO: temporary workaround until I can correct the data. Also, used in the main
 // website and should be corrected there too.
@@ -52,8 +54,8 @@ export default async function week(req: NextApiRequest, res: NextApiResponse) {
 	const start = parseISO(startDate);
 	const end = endOfDay(parseISO(endDate || startDate));
 
-	const calendar = new CalendarService();
-	const data = await calendar.getEvents(username, start, end);
+	const calendar = new Bowie();
+	const data = await calendar.getPlays(username, start, end);
 
 	const result: { [K: string]: Event } = {};
 
@@ -93,6 +95,26 @@ export default async function week(req: NextApiRequest, res: NextApiResponse) {
 
 		currentDate = item.played_at;
 	});
+
+	const trackIds = Object.values(result).map((event) => {
+		return {
+			date: event.date,
+			track: event.items[0],
+		};
+	});
+
+	const ids = trackIds.map((t) => t.track.track.spotify_id)
+
+	let cacheTracks = await getTracks(ids)
+
+	if (!cacheTracks) {
+		const spotify = new Spotify()
+
+		const tracks = await spotify.getTracks(ids)
+		await setTracks(ids, JSON.stringify(tracks.tracks))
+	}
+
+	console.log(cacheTracks)
 
 	res.status(200).json(result);
 }
