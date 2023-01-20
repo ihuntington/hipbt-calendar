@@ -1,4 +1,4 @@
-import { addMilliseconds, differenceInMinutes, endOfDay, formatISO, parseISO } from "date-fns";
+import { differenceInMinutes, endOfDay, parseISO, subMilliseconds } from "date-fns";
 import { Bowie, BowieTrack } from "./bowie";
 import { Image, Spotify } from "./spotify";
 
@@ -15,8 +15,6 @@ const FALLBACK_TRACK_DURATION_MS = 1000 * 60 * 3;
 const MINUTES_BETWEEN_EVENTS = 15;
 
 type ListenEvent = {
-	iso_date: string;
-	date: Date;
 	start_time: Date;
 	end_time: Date;
 	items: Play[];
@@ -24,23 +22,22 @@ type ListenEvent = {
 }
 
 function createListenEvent(item: Play): ListenEvent {
-	const playedAt = parseISO(item.played_at);
-	const isoDate = formatISO(playedAt);
+	const endTime = parseISO(item.played_at);
+	const startTime = subMilliseconds(endTime, item.track.duration_ms || FALLBACK_TRACK_DURATION_MS)
 
 	return {
-		iso_date: isoDate,
-		date: playedAt,
 		items: [item],
-		start_time: playedAt,
-		end_time: addMilliseconds(playedAt, item.track.duration_ms || FALLBACK_TRACK_DURATION_MS),
+		start_time: startTime,
+		end_time: endTime,
 		images: [],
 	}
 }
 
 function getMinutesBetweenPlays(previousPlay: Play, currentPlay: Play) {
-	const previousStartTime = parseISO(previousPlay.played_at);
-	const previousEndTime = addMilliseconds(previousStartTime, previousPlay.track.duration_ms || FALLBACK_TRACK_DURATION_MS);
-	return Math.abs(differenceInMinutes(previousEndTime, parseISO(currentPlay.played_at)));
+	const previousEndTime = parseISO(previousPlay.played_at);
+	const currentEndTime = parseISO(currentPlay.played_at);
+	const currentStartTime = subMilliseconds(currentEndTime, currentPlay.track.duration_ms || FALLBACK_TRACK_DURATION_MS);
+	return differenceInMinutes(currentStartTime, previousEndTime);
 }
 
 export class CalendarWeek {
@@ -62,14 +59,16 @@ export class CalendarWeek {
 		const plays = await CalendarWeek.bowie.getPlays(this.username, this.startDate, this.endDate);
 		const listenEvents = new Map<string, ListenEvent>();
 
-		let currentDate:string;
+		let currentDate: Date;
 
 		plays.items.forEach((item, index, arr) => {
+			const endTime = parseISO(item.played_at)
+			const startTime = subMilliseconds(endTime, item.track.duration_ms || FALLBACK_TRACK_DURATION_MS)
 
 			if (index === 0) {
-				listenEvents.set(item.played_at, createListenEvent(item));
+				listenEvents.set(startTime.toString(), createListenEvent(item));
 
-				currentDate = item.played_at;
+				currentDate = startTime;
 
 				return;
 			}
@@ -77,24 +76,24 @@ export class CalendarWeek {
 			const diff = getMinutesBetweenPlays(arr[index - 1], item);
 
 			if (diff < MINUTES_BETWEEN_EVENTS) {
-				const event = listenEvents.get(currentDate);
+				const event = listenEvents.get(currentDate.toString());
 
 				if (event) {
-					const playedAt = parseISO(item.played_at);
+					const endTime = parseISO(item.played_at);
 
-					listenEvents.set(currentDate, {
+					listenEvents.set(currentDate.toString(), {
 						...event,
 						items: event.items.concat(item),
-						end_time: addMilliseconds(playedAt, item.track.duration_ms)  || FALLBACK_TRACK_DURATION_MS,
+						end_time: endTime,
 					})
 
 					return;
 				}
 			}
 
-			listenEvents.set(item.played_at, createListenEvent(item));
+			listenEvents.set(startTime.toString(), createListenEvent(item));
 
-			currentDate = item.played_at;
+			currentDate = startTime;
 		});
 
 		return listenEvents;
@@ -148,8 +147,3 @@ export class CalendarWeek {
 		});
 	}
 }
-
-// const week = new CalendarWeek("ian", "2023-01-09", "2023-01-15")
-// const events = await week.getEvents()
-// const tracks = await week.getTracksFromSpotify()
-

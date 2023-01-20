@@ -54,7 +54,7 @@ function getEndTimeOffset(event: IEvent) {
 export function CalendarEvent({ event, dates }: { event: IEvent; dates: Date[] }) {
 	const startTime = new Date(event.start_time);
 	const endTime = new Date(event.end_time);
-	const weekDayIndex = getWeekDayIndex(parseISO(event.iso_date), dates);
+	const weekDayIndex = getWeekDayIndex(startTime, dates);
 	const posY = getStartTimeOffset(event) * MULTIPLIER;
 	const height = getEndTimeOffset(event) * MULTIPLIER
 
