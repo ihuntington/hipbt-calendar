@@ -1,6 +1,7 @@
 import { formatISO } from "date-fns";
 import fetch from "node-fetch";
 import qs from "query-string";
+import type { Track } from "./spotify";
 
 export enum Service {
     SPOTIFY = "SPOTIFY",
@@ -12,7 +13,7 @@ export type Artist = {
     spotify_id: string;
 }
 
-export type Track = {
+export type BowieTrack = {
     id: number;
     name: string;
     spotify_id: string;
@@ -24,7 +25,7 @@ export type Play = {
     id: number;
     played_at: string;
     source_service: Service;
-    track: Track;
+    track: BowieTrack;
 }
 
 export type PlaysSuccessResponse = {

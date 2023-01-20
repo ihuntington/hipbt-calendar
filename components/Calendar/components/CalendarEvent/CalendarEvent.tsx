@@ -9,6 +9,8 @@ import formatWithOptions from "date-fns/fp/formatWithOptions";
 import { Play } from "lib/bowie";
 import { sprinkles as s } from "@/styles/sprinkles.css";
 
+import type { Image as AlbumImage } from "lib/spotify";
+
 export interface IEvent {
 	iso_date: string;
 	date: string;
@@ -16,6 +18,7 @@ export interface IEvent {
 	end_time: string;
 	items: Play[];
 	total: number;
+	images: AlbumImage[];
 }
 
 const MULTIPLIER = 2;
@@ -74,8 +77,10 @@ export function CalendarEvent({ event, dates }: { event: IEvent; dates: Date[] }
 			}}
 			onClick={handleClick}
 		>
-			{`${formatTime(startTime)} - ${formatTime(endTime)}`}
-			<p>{event.items[0].track.name}</p>
+			<div>
+				{`${formatTime(startTime)} - ${formatTime(endTime)}`}
+				<p>{event.items[0].track.name}</p>
+			</div>
 		</div>
 	);
 }

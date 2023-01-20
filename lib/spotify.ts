@@ -7,6 +7,47 @@ type SpotifyAuthResponse = {
 	expires_in: number
 }
 
+export type Image = {
+	height: number;
+	width: number;
+	url: string;
+}
+
+type Album = {
+	album_type: "album";
+	artists: any[];
+	available_markets: string[];
+	external_urls: Record<string, string>;
+	href: string;
+	id: string;
+	images: Image[];
+	name: string;
+	release_date: string;
+	release_date_precision: "day";
+	total_tracks: number;
+	type: "album";
+	uri: string;
+}
+
+export type Track = {
+	album: Album;
+	artists: any[];
+	available_markets: string[];
+	disc_number: number;
+	duration_ms: number;
+	explicit: boolean;
+	external_ids: Record<string, string>;
+	external_urls: Record<string, string>;
+	href: string;
+	id: string;
+	is_local: boolean;
+	name: string;
+	popularity: number;
+	preview_url: string;
+	type: "track";
+	uri: string;
+}
+
 export class Spotify {
 
 	token: SpotifyAuthResponse | null = null
@@ -49,9 +90,11 @@ export class Spotify {
 				},
 			});
 
-			if (response.ok) {
-				return await response.json()
+			if (!response.ok) {
+				return { tracks: [] };
 			}
+
+			return await response.json() as { tracks: Track[] }
 		} catch (err) {
 			console.error(err);
 			return { tracks: [] };
