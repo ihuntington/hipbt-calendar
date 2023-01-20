@@ -66,7 +66,7 @@ export function CalendarEvent({ event, dates }: { event: IEvent; dates: Date[] }
 		<div
 			className={clsx(s({ position: "absolute" }))}
 			style={{
-				top: `${posY}px`,
+				top: `calc(${posY}px + 8px)`,
 				height: `max(${height}px, ${MIN_EVENT_HEIGHT}px)`,
 				lineHeight: 1,
 				background: "pink",
