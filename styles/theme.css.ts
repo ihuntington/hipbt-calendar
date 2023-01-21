@@ -46,6 +46,7 @@ export const colors = {
 	blue700: `#1d4ed8`,
 	blue800: `#1e40af`,
 	blue900: `#1e3a8a`,
+	spotifyGreen: '#1db954',
 }
 
 export const breakpoints = {

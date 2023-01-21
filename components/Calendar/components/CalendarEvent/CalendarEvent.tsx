@@ -2,14 +2,16 @@ import clsx from "clsx";
 import {
 	differenceInMinutes,
 	isSameDay,
-	parseISO,
 	startOfDay,
 } from "date-fns";
 import formatWithOptions from "date-fns/fp/formatWithOptions";
+import { assignInlineVars } from "@vanilla-extract/dynamic"
 import { Play } from "lib/bowie";
 import { sprinkles as s } from "@/styles/sprinkles.css";
 
 import type { Image as AlbumImage } from "lib/spotify";
+
+import * as styles from "./CalendarEvent.css"
 
 export interface IEvent {
 	iso_date: string;
@@ -53,7 +55,6 @@ function getEndTimeOffset(event: IEvent) {
 
 export function CalendarEvent({ event, dates }: { event: IEvent; dates: Date[] }) {
 	const startTime = new Date(event.start_time);
-	const endTime = new Date(event.end_time);
 	const weekDayIndex = getWeekDayIndex(startTime, dates);
 	const posY = getStartTimeOffset(event) * MULTIPLIER;
 	const height = getEndTimeOffset(event) * MULTIPLIER
@@ -64,21 +65,19 @@ export function CalendarEvent({ event, dates }: { event: IEvent; dates: Date[] }
 
 	return (
 		<div
-			className={clsx(s({ position: "absolute" }))}
-			style={{
-				top: `calc(${posY}px + 8px)`,
-				height: `max(${height}px, ${MIN_EVENT_HEIGHT}px)`,
-				lineHeight: 1,
-				background: "pink",
-				width: "100%",
-				gridRowStart: 1,
-				gridColumnStart: weekDayIndex + 2,
-				gridColumnEnd: weekDayIndex + 2
-			}}
+			className={clsx(s({ position: "absolute" }), styles.container)}
+			style={assignInlineVars({
+				[styles.height]: `${height}px`,
+				[styles.top]: `${posY}px`,
+				[styles.gridColumn]: `${weekDayIndex}`
+			})}
 			onClick={handleClick}
 		>
-			<div>
-				{`${formatTime(startTime)} - ${formatTime(endTime)}`}
+			<div className={styles.body}>
+				<time
+					dateTime={startTime.toLocaleString()}
+					className={styles.time}
+				>{`${formatTime(startTime)}`}</time>
 				<p>{event.items[0].track.name}</p>
 			</div>
 		</div>
