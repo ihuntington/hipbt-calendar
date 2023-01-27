@@ -1,0 +1,20 @@
+:root {
+	--color-white: #fff;
+	--color-black: #000;
+	--color-brand-spotify-green: #1db954;
+}
+
+html[data-color-theme="light"] {
+	--page-background-color: var(--color-white);
+	--prose-color: var(--color-black);
+}
+
+html[data-color-theme="dark"] {
+	--page-background-color: var(--color-black);
+	--prose-color: var(--color-white);
+}
+
+body {
+	background-color: var(--page-background-color);
+	color: var(--prose-color);
+}

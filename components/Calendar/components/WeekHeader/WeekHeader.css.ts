@@ -54,7 +54,7 @@ export const day = style({
 });
 
 export const weekHeader = style({
-	backgroundColor: vars.colors.background,
+	backgroundColor: vars.colors.gray100,
 	borderBlockEndWidth: 1,
 	borderBlockEndColor: vars.colors.gray400,
 	borderBlockEndStyle: "solid",
@@ -67,4 +67,10 @@ export const weekHeader = style({
 	right: 0,
 	marginInline: "1rem",
 	zIndex: 3,
+	selectors: {
+		".dark &": {
+			backgroundColor: vars.colors.stone900,
+			borderBlockEndColor: "hsl(0deg 0% 100% / 20%)",
+		}
+	}
 });

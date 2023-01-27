@@ -73,12 +73,12 @@ export function CalendarEvent({ event, dates }: { event: IEvent; dates: Date[] }
 			})}
 			onClick={handleClick}
 		>
-			<div className={styles.body}>
+			<div className={clsx(s({ overflowX: 'hidden', overflowY: 'hidden' }), styles.body)}>
 				<time
 					dateTime={startTime.toLocaleString()}
 					className={styles.time}
 				>{`${formatTime(startTime)}`}</time>
-				<p>{event.items[0].track.name}</p>
+				<p className={clsx(s({ fontSize: 'md', fontWeight: 700 }), styles.title)}>{event.items[0].track.name}</p>
 			</div>
 		</div>
 	);

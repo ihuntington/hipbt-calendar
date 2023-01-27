@@ -1,7 +1,5 @@
-import { getDate, isSameMonth, isToday } from "date-fns";
-import clsx from "clsx";
+import { getDate } from "date-fns";
 import styles from "./DayCell.module.css";
-// import * as styles from "./DayCell.css";
 
 interface IDayCell {
 	date: Date;
@@ -9,8 +7,6 @@ interface IDayCell {
 }
 
 export function DayCell({ date, selectedMonth }: IDayCell) {
-	const inMonth = isSameMonth(date, selectedMonth);
-
 	return (
 		<div>
 			<div className={styles.cell}>

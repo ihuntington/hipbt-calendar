@@ -7,7 +7,7 @@ import {
 	startOfDay,
 } from "date-fns";
 import { useCalendarContext } from "../../context/CalendarContext";
-import { HourGrid } from "../HourGrid";
+import { HourGrid } from "../HourGrid/HourGrid";
 
 import { WeekBody } from "../WeekBody";
 import { WeekDayCols } from "./WeekDayCols";

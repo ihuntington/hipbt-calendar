@@ -7,7 +7,7 @@ import {
 } from "date-fns";
 import { useCalendarContext } from "../../context/CalendarContext";
 import { WeekGrid } from "../WeekGrid";
-import { IEvent, CalendarEvent} from "../CalendarEvent"
+import { IEvent, CalendarEvent} from "../CalendarEvent/CalendarEvent"
 
 // TODO: revert back to being an array of events because if there are more than
 // one event on the same day this current approach will not work. Or group events by day.

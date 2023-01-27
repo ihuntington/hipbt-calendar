@@ -1,4 +1,4 @@
-import { createThemeContract, createTheme } from "@vanilla-extract/css"
+import { createThemeContract, createTheme, createGlobalTheme } from "@vanilla-extract/css"
 
 const SYSTEM_FONT_STACK = `-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
 Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"`
@@ -46,6 +46,7 @@ export const colors = {
 	blue700: `#1d4ed8`,
 	blue800: `#1e40af`,
 	blue900: `#1e3a8a`,
+	stone900: '#1C1917',
 	spotifyGreen: '#1db954',
 }
 
@@ -55,43 +56,43 @@ export const breakpoints = {
 	desktop: 1200,
 }
 
-export const vars = createThemeContract({
-	colors: {
-		primary: ``,
-		body: ``,
-		background: ``,
-		link: ``,
-		linkHover: ``,
-		...colors,
-	},
-	font: {
-		body: ``,
-	},
-	fontSize: {
-		xs: ``,
-		sm: ``,
-		md: ``,
-		lg: ``,
-		xl: ``,
-	},
-	space: {
-		xs: ``,
-		sm: ``,
-		md: ``,
-		lg: ``,
-		xl: ``,
-	},
-	boxShadow: {
-		sm: ``,
-		md: ``,
-		lg: ``,
-	},
-	radii: {
-		sm: ``,
-		md: ``,
-		full: ``,
-	},
-})
+// export const vars = createThemeContract({
+// 	colors: {
+// 		primary: ``,
+// 		body: ``,
+// 		background: ``,
+// 		link: ``,
+// 		linkHover: ``,
+// 		...colors,
+// 	},
+// 	font: {
+// 		body: ``,
+// 	},
+// 	fontSize: {
+// 		xs: ``,
+// 		sm: ``,
+// 		md: ``,
+// 		lg: ``,
+// 		xl: ``,
+// 	},
+// 	space: {
+// 		xs: ``,
+// 		sm: ``,
+// 		md: ``,
+// 		lg: ``,
+// 		xl: ``,
+// 	},
+// 	boxShadow: {
+// 		sm: ``,
+// 		md: ``,
+// 		lg: ``,
+// 	},
+// 	radii: {
+// 		sm: ``,
+// 		md: ``,
+// 		full: ``,
+// 	},
+// })
 
 const commonVars = {
 	font: {
@@ -123,26 +124,31 @@ const commonVars = {
 	},
 }
 
-export const lightThemeClass = createTheme(vars, {
-	colors: {
-		primary: colors.blue500,
-		body: colors.gray700,
-		background: colors.gray100,
-		link: colors.blue800,
-		linkHover: colors.blue600,
-		...colors,
-	},
+export const vars = createGlobalTheme(':root', {
+	colors,
 	...commonVars,
 })
 
-export const darkThemeClass = createTheme(vars, {
-	colors: {
-		primary: colors.blue400,
-		body: colors.gray300,
-		background: colors.gray800,
-		link: colors.blue200,
-		linkHover: colors.blue400,
-		...colors,
-	},
-	...commonVars,
-})
+// export const lightThemeClass = createTheme(vars, {
+// 	colors: {
+// 		primary: colors.blue500,
+// 		body: colors.gray700,
+// 		background: colors.gray100,
+// 		link: colors.blue800,
+// 		linkHover: colors.blue600,
+// 		...colors,
+// 	},
+// 	...commonVars,
+// })
+
+// export const darkThemeClass = createTheme(vars, {
+// 	colors: {
+// 		primary: colors.blue400,
+// 		body: colors.gray300,
+// 		background: colors.gray800,
+// 		link: colors.blue200,
+// 		linkHover: colors.blue400,
+// 		...colors,
+// 	},
+// 	...commonVars,
+// })

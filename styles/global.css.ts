@@ -1,4 +1,5 @@
 import { globalStyle } from "@vanilla-extract/css"
+import { vars } from "./theme.css"
 
 globalStyle(`*`, {
 	boxSizing: `border-box`,
@@ -7,19 +8,24 @@ globalStyle(`*`, {
 
 globalStyle(`html, body`, {
 	minHeight: `100%`,
-	fontSize: `16px`,
+})
+
+globalStyle('.dark', {
+	colorScheme: 'dark',
 })
 
 globalStyle(`body`, {
 	backgroundColor: "#f3f4f6",
+	display: "flex",
+	flex: 1,
+	fontFamily: vars.font.body,
 	lineHeight: 1.5,
 	WebkitFontSmoothing: `antialiased`,
 })
 
-globalStyle("body", {
-	display: "flex",
-	flex: 1,
-});
+globalStyle(`.dark body`, {
+	backgroundColor: vars.colors.stone900,
+})
 
 globalStyle("#__next", {
 	display: "flex",

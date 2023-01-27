@@ -8,7 +8,7 @@ export const page = style({
 });
 
 export const header = style({
-	backgroundColor: vars.colors.background,
+	backgroundColor: vars.colors.gray100,
 	height: "4rem",
 	marginInline: "1rem",
 	position: "fixed",
@@ -16,6 +16,11 @@ export const header = style({
 	top: 0,
 	right: 0,
 	zIndex: 3,
+	selectors: {
+		".dark &": {
+			backgroundColor: vars.colors.stone900,
+		}
+	}
 });
 
 export const footer = style([header, {

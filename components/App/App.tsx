@@ -1,14 +1,19 @@
-import React from "react";
-import clsx from "clsx";
-
-import { lightThemeClass, darkThemeClass } from "../../styles/theme.css";
-import * as styles from "./App.css";
+import Script from "next/script";
 
 export function App({ children }: React.PropsWithChildren) {
-	const schemeClass = lightThemeClass;
 	return (
-		<div className={clsx(schemeClass, styles.wrapper)}>
+		<>
+			<Script id="color-mode">
+				{`((d) => {
+					try {
+					var p = localStorage.getItem('theme');
+					if (p == d || (p != 'light' && matchMedia('(prefers-color-scheme:dark)').matches)) {
+						document.documentElement.classList.add(d)
+					}
+						} catch (e) {}
+					})('dark')`}
+			</Script>
 			{children}
-		</div>
-	)
+		</>
+	);
 }

@@ -138,7 +138,14 @@ export class CalendarWeek {
 
 	private addAlbumCovers(tracks: Track[]) {
 		this.events.forEach((event, key, events) => {
-			const track = tracks.find((t) => t.id === event.items[0].track.spotify_id);
+			const track = tracks.find((t) => {
+				// TODO: some track data needs refreshing
+				if (!t) {
+					return false;
+				}
+
+				return t.id === event.items[0].track.spotify_id
+			});
 
 			events.set(key, {
 				...event,

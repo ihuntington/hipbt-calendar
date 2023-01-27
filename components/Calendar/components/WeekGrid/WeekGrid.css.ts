@@ -2,7 +2,7 @@ import { style } from "@vanilla-extract/css";
 
 export const grid = style({
 	display: "grid",
-	gridColumnGap: 2,
+	gridColumnGap: "0.5rem",
 	gridTemplateColumns: "3rem repeat(7, 1fr)",
 	// pointerEvents: "none",
 	position: "absolute",

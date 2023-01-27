@@ -8,8 +8,12 @@ export const separator = style({
 			content: `""`,
 			display: "block",
 			backgroundColor: vars.colors.gray300,
-			height: "100%",
+			height: "calc(100% - 16px)",
+			transform: "translateY(8px)",
 			width: 1,
+		},
+		".dark &::after": {
+			backgroundColor: "hsl(0deg 0% 100% / 20%)",
 		}
 	}
 });

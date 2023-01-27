@@ -21,18 +21,18 @@ export const collapse = style({
 });
 
 export const time = style({
-	background: vars.colors.background,
 	gridColumn: "time",
 	textAlign: "right",
 	selectors: {
 		[`${highlight} &`]: {
+			backgroundColor: vars.colors.stone900,
 			color: vars.colors.red500,
 		},
 	}
 });
 
 export const line = style({
-	backgroundColor: vars.colors.gray300,
+	backgroundColor: "hsl(0deg 0% 100% / 20%)",
 	display: "block",
 	gridColumn: "line-start / line-end",
 	gridRow: 1,
@@ -50,10 +50,15 @@ export const marker = style({
 	borderRadius: 9999,
 	borderWidth: 1,
 	borderStyle: "solid",
-	borderColor: vars.colors.background,
+	borderColor: vars.colors.gray100,
 	display: "block",
 	gridRow: 1,
 	height: 12,
 	transform: "translateX(-6px)",
 	width: 12,
+	selectors: {
+		[`.dark &`]: {
+			borderColor: vars.colors.stone900,
+		}
+	}
 });

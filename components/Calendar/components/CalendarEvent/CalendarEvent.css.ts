@@ -29,12 +29,27 @@ export const container = style({
 	lineHeight: 1,
 	height: `max(${height}, ${eventMinHeight})`,
 	top: `calc(${top} + 8px)`,
+	width: '100%',
+	selectors: {
+		".dark &": {
+			backgroundColor: Color(colors.spotifyGreen).alpha(0.2).hsl().toString(),
+		}
+	}
 })
 
 export const body = style({
+	flex: 1,
 	padding: 4,
 })
 
 export const time = style({
-	fontSize: vars.fontSize.xs
+	fontSize: vars.fontSize.xs,
+	color: vars.colors.spotifyGreen
+})
+
+export const title = style({
+	color: Color(colors.spotifyGreen).hsl().toString(),
+	overflow: "hidden",
+	textOverflow: "ellipsis",
+	whiteSpace: "nowrap"
 })
