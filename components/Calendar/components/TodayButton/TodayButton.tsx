@@ -1,5 +1,5 @@
 import { startOfToday } from "date-fns";
-import { Button } from "../../../Button";
+import { Button } from "../../../Button/Button";
 import { useCalendarActionContext, useCalendarContext } from "../../context/CalendarContext";
 
 export function TodayButton() {

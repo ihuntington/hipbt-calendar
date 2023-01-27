@@ -1,5 +1,5 @@
 import { addMonths, format, subMonths } from "date-fns";
-import { Button } from "../../../Button";
+import { Button } from "../../../Button/Button";
 import { useCalendarActionContext, useCalendarContext } from "../../context/CalendarContext";
 import { container } from "./MonthNav.css";
 

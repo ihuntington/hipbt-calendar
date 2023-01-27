@@ -1,4 +1,4 @@
 export * from "./App/App";
-export * from "./Button";
+export * from "./Button/Button";
 export * from "./Calendar";
-export * from "./Flex";
+export * from "./Flex/Flex";

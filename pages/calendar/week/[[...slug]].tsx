@@ -1,6 +1,6 @@
 import { formatISO, isDate, parseISO } from "date-fns";
 import { App } from "@/components/App/App";
-import { WeekPage } from "@/components/WeekPage";
+import { WeekPage } from "@/components/WeekPage/WeekPage";
 import type { GetServerSideProps } from "next"
 
 import "@/styles/global.css";

@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { addWeeks, format, startOfDay } from "date-fns";
-import { Button } from "@/components/Button";
-import { Flex } from "../../../Flex";
+import { Button } from "@/components/Button/Button";
+import { Flex } from "@/components/Flex/Flex";
 import { useCalendarActionContext, useCalendarContext } from "../../context/CalendarContext";
 
 import * as styles from "./WeekNav.css";
