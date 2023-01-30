@@ -13,9 +13,13 @@ export const button = style({
 	paddingBlock: vars.space.xs,
 	selectors: {
 		"&:hover": {
-			color: vars.colors.linkHover,
+			color: vars.colors.blue400,
 			cursor: `pointer`,
-			borderColor: vars.colors.linkHover,
+			// borderColor: vars.colors.linkHover,
 		},
+		".dark &": {
+			borderColor: vars.colors.white,
+			color: vars.colors.white,
+		}
 	},
 });
