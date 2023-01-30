@@ -62,7 +62,7 @@ export const day = style({
 });
 
 export const rowHeader = style({
-	backgroundColor: vars.colors.background,
+	// backgroundColor: vars.colors.background,
 	borderBlockEndWidth: 1,
 	borderBlockEndColor: vars.colors.gray400,
 	borderBlockEndStyle: "solid",
