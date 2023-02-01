@@ -4,55 +4,58 @@ import qs from "query-string";
 import type { Track } from "./spotify";
 
 export enum Service {
-    SPOTIFY = "SPOTIFY",
+	SPOTIFY = "SPOTIFY",
 }
 
 export type Artist = {
-    id: number;
-    name: string;
-    spotify_id: string;
-}
+	id: number;
+	name: string;
+	spotify_id: string;
+};
 
 export type BowieTrack = {
-    id: number;
-    name: string;
-    spotify_id: string;
-    duration_ms: number;
-    artists: Artist[];
-}
+	id: number;
+	name: string;
+	spotify_id: string;
+	duration_ms: number;
+	artists: Artist[];
+};
 
 export type Play = {
-    id: number;
-    played_at: string;
-    source_service: Service;
-    track: BowieTrack;
-}
+	id: number;
+	played_at: string;
+	source_service: Service;
+	track: BowieTrack;
+};
 
 export type PlaysSuccessResponse = {
-    items: Play[];
-    total: number;
-}
+	items: Play[];
+	total: number;
+};
 
 export type PlaysBadRequest = {
-    message: string;
-}
+	message: string;
+};
 
 export type PlaysResponse = PlaysSuccessResponse | PlaysBadRequest;
 
 export class Bowie {
-    private async request(query: { [K: string]: string }) {
-        const url = process.env.API_URL as string;
-        const response = await fetch(`${url}/scrobbles?${qs.stringify(query)}`, {
-            headers: {
-                Authorization: process.env.API_AUTH as string,
-            }
-        });
-        return response.json();
-    }
+	private async request(query: { [K: string]: string }) {
+		const url = process.env.API_URL as string;
+		const response = await fetch(`${url}/scrobbles?${qs.stringify(query)}`, {
+			headers: {
+				Authorization: process.env.API_AUTH as string,
+			},
+		});
+		return response.json();
+	}
 
-    async getPlaysByDate(date: string, username: string) {
-        return this.request({ date, username }) as Promise<PlaysSuccessResponse>;
-    }
+	async getPlaysByDate(date: string, username: string) {
+		return this.request({
+			date,
+			username,
+		}) as Promise<PlaysSuccessResponse>;
+	}
 
 	async getPlays(username: string, startDate: Date, endDate: Date) {
 		return this.request({

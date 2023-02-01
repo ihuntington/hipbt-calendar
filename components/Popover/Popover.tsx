@@ -1,6 +1,6 @@
 import React, { forwardRef } from "react";
 import * as PopoverPrimitive from "@radix-ui/react-popover";
-import * as styles from './Popover.css';
+import * as styles from "./Popover.css";
 
 export const Popover = PopoverPrimitive.Root;
 export const PopoverTrigger = PopoverPrimitive.Trigger;
@@ -15,11 +15,9 @@ interface IPopoverContent {
 export const PopoverContent = forwardRef<HTMLDivElement, IPopoverContent>(({ children }, ref) => {
 	return (
 		<PopoverPrimitive.Content asChild side="right" sideOffset={8} hideWhenDetached>
-			<div className={styles.content}>
-			{children}
-			</div>
+			<div className={styles.content}>{children}</div>
 		</PopoverPrimitive.Content>
-	)
-})
+	);
+});
 
-PopoverContent.displayName = "PopoverContent"
+PopoverContent.displayName = "PopoverContent";

@@ -1,11 +1,5 @@
 import clsx from "clsx";
-import {
-	startOfWeek,
-	endOfWeek,
-	eachDayOfInterval,
-	isSameWeek,
-	startOfDay,
-} from "date-fns";
+import { startOfWeek, endOfWeek, eachDayOfInterval, isSameWeek, startOfDay } from "date-fns";
 import { useCalendarContext } from "../../context/CalendarContext";
 import { HourGrid } from "../HourGrid/HourGrid";
 

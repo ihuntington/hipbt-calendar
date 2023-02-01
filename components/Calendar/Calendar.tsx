@@ -8,21 +8,10 @@ import {
 	getISOWeek,
 } from "date-fns";
 import { DayCell, DaysOfWeek } from "./components";
-import {
-	calendar,
-	calendarView,
-	weekNumber,
-	weeksOfYear,
-} from "./calendar.css";
+import { calendar, calendarView, weekNumber, weeksOfYear } from "./calendar.css";
 import { useCalendarContext } from "./context/CalendarContext";
 
-function WeekOfYear({
-	startDate,
-	endDate,
-}: {
-	startDate: Date;
-	endDate: Date;
-}) {
+function WeekOfYear({ startDate, endDate }: { startDate: Date; endDate: Date }) {
 	const weeks = eachWeekOfInterval(
 		{
 			start: startDate,
@@ -67,11 +56,7 @@ export function CalendarView() {
 			<WeekOfYear startDate={startDate} endDate={endDate} />
 			<div className={calendar}>
 				{dates.map((d) => (
-					<DayCell
-						date={d}
-						key={d.toISOString()}
-						selectedMonth={startOfMonth(date)}
-					/>
+					<DayCell date={d} key={d.toISOString()} selectedMonth={startOfMonth(date)} />
 				))}
 			</div>
 		</div>

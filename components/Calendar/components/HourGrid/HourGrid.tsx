@@ -1,11 +1,5 @@
-import {
-	addDays,
-	differenceInMinutes,
-	eachHourOfInterval,
-	startOfDay,
-	isSameWeek,
-} from "date-fns";
-import { sprinkles as s} from "@/styles/sprinkles.css";
+import { addDays, differenceInMinutes, eachHourOfInterval, startOfDay, isSameWeek } from "date-fns";
+import { sprinkles as s } from "@/styles/sprinkles.css";
 import { useCalendarContext } from "../../context/CalendarContext";
 import { HourRow } from "./HourRow";
 
@@ -49,7 +43,9 @@ export function HourGrid({ date }: { date: Date }) {
 
 	return (
 		<div data-layer="hour-grid">
-			{hours.map((h, index, arr) => <HourRow key={h.toISOString()} date={h} collapse={index === arr.length - 1} />)}
+			{hours.map((h, index, arr) => (
+				<HourRow key={h.toISOString()} date={h} collapse={index === arr.length - 1} />
+			))}
 			<CurrentTimeMarker />
 		</div>
 	);

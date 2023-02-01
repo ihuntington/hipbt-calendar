@@ -2,16 +2,16 @@ import Process from "process";
 import qs from "query-string";
 
 type SpotifyAuthResponse = {
-	access_token: string,
-	token_type: string,
-	expires_in: number
-}
+	access_token: string;
+	token_type: string;
+	expires_in: number;
+};
 
 export type Image = {
 	height: number;
 	width: number;
 	url: string;
-}
+};
 
 type Album = {
 	album_type: "album";
@@ -27,7 +27,7 @@ type Album = {
 	total_tracks: number;
 	type: "album";
 	uri: string;
-}
+};
 
 export type Track = {
 	album: Album;
@@ -46,11 +46,10 @@ export type Track = {
 	preview_url: string;
 	type: "track";
 	uri: string;
-}
+};
 
 export class Spotify {
-
-	token: SpotifyAuthResponse | null = null
+	token: SpotifyAuthResponse | null = null;
 
 	async getAccessToken() {
 		try {
@@ -69,7 +68,7 @@ export class Spotify {
 			});
 
 			if (response.ok) {
-				this.token = await response.json() as SpotifyAuthResponse
+				this.token = (await response.json()) as SpotifyAuthResponse;
 			}
 		} catch (err) {
 			console.log(err);
@@ -94,7 +93,7 @@ export class Spotify {
 				return { tracks: [] };
 			}
 
-			return await response.json() as { tracks: Track[] }
+			return (await response.json()) as { tracks: Track[] };
 		} catch (err) {
 			console.error(err);
 			return { tracks: [] };

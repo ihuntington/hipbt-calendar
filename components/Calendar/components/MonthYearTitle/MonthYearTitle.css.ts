@@ -7,8 +7,8 @@ export const month = style({
 	selectors: {
 		"&:after": {
 			content: `" "`,
-		}
-	}
+		},
+	},
 });
 
 export const year = style({

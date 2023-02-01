@@ -12,9 +12,12 @@ export const row = style({
 	pointerEvents: "none",
 });
 
-export const highlight = style([row, {
-	height: "auto",
-}]);
+export const highlight = style([
+	row,
+	{
+		height: "auto",
+	},
+]);
 
 export const collapse = style({
 	height: "auto",
@@ -28,7 +31,7 @@ export const time = style({
 			backgroundColor: vars.colors.stone900,
 			color: vars.colors.red500,
 		},
-	}
+	},
 });
 
 export const line = style({
@@ -42,7 +45,7 @@ export const line = style({
 		[`${highlight} &`]: {
 			backgroundColor: vars.colors.red500,
 		},
-	}
+	},
 });
 
 export const marker = style({
@@ -59,6 +62,6 @@ export const marker = style({
 	selectors: {
 		[`.dark &`]: {
 			borderColor: vars.colors.stone900,
-		}
-	}
+		},
+	},
 });

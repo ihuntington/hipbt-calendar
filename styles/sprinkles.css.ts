@@ -11,7 +11,7 @@ const unresponsiveProperties = defineProperties({
 		position: ["static", "relative", "absolute", "sticky", "fixed"],
 		overflowX: ["visible", "hidden", "clip", "scroll", "auto"],
 		overflowY: ["visible", "hidden", "clip", "scroll", "auto"],
-	}
+	},
 });
 
 export const sprinkles = createSprinkles(unresponsiveProperties);

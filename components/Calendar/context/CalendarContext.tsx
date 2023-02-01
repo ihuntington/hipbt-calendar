@@ -1,11 +1,4 @@
-import {
-	createContext,
-	PropsWithChildren,
-	useContext,
-	useEffect,
-	useMemo,
-	useState,
-} from "react";
+import { createContext, PropsWithChildren, useContext, useEffect, useMemo, useState } from "react";
 import {
 	endOfDay,
 	endOfWeek,
@@ -81,8 +74,7 @@ export function CalendarProvider({
 					...s,
 					...getStateFromDate(date),
 				})),
-			setTime: (date: Date) =>
-				setState((s) => ({ ...s, time: startOfMinute(date) })),
+			setTime: (date: Date) => setState((s) => ({ ...s, time: startOfMinute(date) })),
 		}),
 		[]
 	);

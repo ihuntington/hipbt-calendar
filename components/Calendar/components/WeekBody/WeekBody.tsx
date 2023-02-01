@@ -1,13 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import qs from "query-string";
-import {
-	addDays,
-	eachDayOfInterval,
-	formatISO,
-} from "date-fns";
+import { addDays, eachDayOfInterval, formatISO } from "date-fns";
 import { useCalendarContext } from "../../context/CalendarContext";
 import { WeekGrid } from "../WeekGrid";
-import { IEvent, CalendarEvent} from "../CalendarEvent/CalendarEvent"
+import { IEvent, CalendarEvent } from "../CalendarEvent/CalendarEvent";
 
 // TODO: revert back to being an array of events because if there are more than
 // one event on the same day this current approach will not work. Or group events by day.
@@ -26,7 +22,7 @@ async function fetchWeek(username: string, weekStart: Date, weekEnd: Date) {
 	const response = await fetch(`/api/week?${query}`);
 
 	if (!response.ok) {
-		throw new Error("Could not fetch events for week")
+		throw new Error("Could not fetch events for week");
 	}
 
 	return response.json() as Promise<IEvents>;
@@ -39,7 +35,7 @@ export function WeekBody() {
 	const { data, isLoading, isError } = useQuery({
 		queryKey: ["week", formatDate(weekStart), formatDate(inclusiveWeekEnd)],
 		queryFn: () => fetchWeek("ian", weekStart, inclusiveWeekEnd),
-		initialData: {}
+		initialData: {},
 	});
 
 	// TODO: handle the error
@@ -54,7 +50,9 @@ export function WeekBody() {
 
 	return (
 		<WeekGrid>
-			{Object.values(data).map((item) => <CalendarEvent key={item.start_time} event={item} dates={dates} />)}
+			{Object.values(data).map((item) => (
+				<CalendarEvent key={item.start_time} event={item} dates={dates} />
+			))}
 		</WeekGrid>
 	);
 }

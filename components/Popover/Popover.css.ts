@@ -6,4 +6,4 @@ export const content = style({
 	color: vars.colors.white,
 	width: 320,
 	zIndex: 100,
-})
+});

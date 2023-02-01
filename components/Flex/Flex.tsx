@@ -47,7 +47,7 @@ export function Flex({
 				styles.direction[direction],
 				styles.justifyContent[justifyContent],
 				styles.alignItems[alignItems],
-				className,
+				className
 			)}
 		>
 			{children}

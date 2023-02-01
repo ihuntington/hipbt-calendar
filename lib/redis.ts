@@ -13,12 +13,12 @@ client.on("connection", () => {
 });
 
 export function setTracks(ids: string[], data: string) {
-	const key = `calendar:tracks-${ids.join('-')}`;
+	const key = `calendar:tracks-${ids.join("-")}`;
 	return client.set(key, data, "EX", 300, "NX");
 }
 
 export async function getTracks(ids: string[]) {
-	const key = `calendar:tracks-${ids.join('-')}`;
+	const key = `calendar:tracks-${ids.join("-")}`;
 	const result = await client.get(key);
 	if (!result) {
 		return null;

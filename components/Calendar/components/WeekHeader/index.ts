@@ -1,1 +1,1 @@
-export * from "./WeekHeader"
+export * from "./WeekHeader";

@@ -1,0 +1,6 @@
+.eslintrc.json
+tsconfig.json
+.next
+.vscode
+package*.json
+*.md

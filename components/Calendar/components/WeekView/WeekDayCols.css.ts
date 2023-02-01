@@ -14,6 +14,6 @@ export const separator = style({
 		},
 		".dark &::after": {
 			backgroundColor: "hsl(0deg 0% 100% / 20%)",
-		}
-	}
+		},
+	},
 });

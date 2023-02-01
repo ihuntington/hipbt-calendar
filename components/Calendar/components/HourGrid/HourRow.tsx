@@ -23,7 +23,13 @@ export function HourRow({
 		>
 			<time className={styles.time}>{hour}</time>
 			<span className={styles.line}></span>
-			{highlight && <span data-iso-day={dayIndex} className={styles.marker} style={{ gridColumn: dayIndex + 1 }}></span>}
+			{highlight && (
+				<span
+					data-iso-day={dayIndex}
+					className={styles.marker}
+					style={{ gridColumn: dayIndex + 1 }}
+				></span>
+			)}
 		</div>
 	);
 }

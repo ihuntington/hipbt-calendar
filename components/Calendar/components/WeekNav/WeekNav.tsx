@@ -17,11 +17,15 @@ export function WeekNav() {
 
 	const setDate = (date: Date) => {
 		actions.setDate(date);
-		router.push({
-			protocol: window.location.protocol,
-			host: window.location.host,
-			pathname: formatCalendarPath(date),
-		}, undefined, { scroll: false, shallow: true })
+		router.push(
+			{
+				protocol: window.location.protocol,
+				host: window.location.host,
+				pathname: formatCalendarPath(date),
+			},
+			undefined,
+			{ scroll: false, shallow: true }
+		);
 	};
 
 	const nextWeek = () => {
@@ -38,9 +42,15 @@ export function WeekNav() {
 
 	return (
 		<Flex className={styles.root}>
-			<Button type="button" onClick={previousWeek}>Previous</Button>
-			<Button type="button" onClick={today}>Today</Button>
-			<Button type="button" onClick={nextWeek}>Next</Button>
+			<Button type="button" onClick={previousWeek}>
+				Previous
+			</Button>
+			<Button type="button" onClick={today}>
+				Today
+			</Button>
+			<Button type="button" onClick={nextWeek}>
+				Next
+			</Button>
 		</Flex>
 	);
 }

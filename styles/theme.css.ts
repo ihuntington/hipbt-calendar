@@ -1,7 +1,7 @@
-import { createThemeContract, createTheme, createGlobalTheme } from "@vanilla-extract/css"
+import { createThemeContract, createTheme, createGlobalTheme } from "@vanilla-extract/css";
 
 const SYSTEM_FONT_STACK = `-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"`
+Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"`;
 
 export const colors = {
 	black: `#000`,
@@ -46,15 +46,15 @@ export const colors = {
 	blue700: `#1d4ed8`,
 	blue800: `#1e40af`,
 	blue900: `#1e3a8a`,
-	stone900: '#1C1917',
-	spotifyGreen: '#1db954',
-}
+	stone900: "#1C1917",
+	spotifyGreen: "#1db954",
+};
 
 export const breakpoints = {
 	mobile: 0,
 	tablet: 768,
 	desktop: 1200,
-}
+};
 
 // export const vars = createThemeContract({
 // 	colors: {
@@ -122,12 +122,12 @@ const commonVars = {
 		md: `0.4rem`,
 		full: `100%`,
 	},
-}
+};
 
-export const vars = createGlobalTheme(':root', {
+export const vars = createGlobalTheme(":root", {
 	colors,
 	...commonVars,
-})
+});
 
 // export const lightThemeClass = createTheme(vars, {
 // 	colors: {

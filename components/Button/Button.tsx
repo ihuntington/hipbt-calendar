@@ -9,6 +9,8 @@ interface IButton {
 
 export function Button({ children, type = "button", onClick }: PropsWithChildren<IButton>) {
 	return (
-		<button type={type} onClick={onClick} className={styles.button}>{children}</button>
+		<button type={type} onClick={onClick} className={styles.button}>
+			{children}
+		</button>
 	);
 }

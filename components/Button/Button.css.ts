@@ -20,6 +20,6 @@ export const button = style({
 		".dark &": {
 			borderColor: vars.colors.white,
 			color: vars.colors.white,
-		}
+		},
 	},
 });

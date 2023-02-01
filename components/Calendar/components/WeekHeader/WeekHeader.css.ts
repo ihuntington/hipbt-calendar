@@ -39,11 +39,14 @@ export const col = style({
 	flex: 1,
 });
 
-export const colDay = style([col, {
-	display: "flex",
-	alignItems: "center",
-	justifyContent: "center",
-}]);
+export const colDay = style([
+	col,
+	{
+		display: "flex",
+		alignItems: "center",
+		justifyContent: "center",
+	},
+]);
 
 export const day = style({
 	selectors: {
@@ -71,6 +74,6 @@ export const weekHeader = style({
 		".dark &": {
 			backgroundColor: vars.colors.stone900,
 			borderBlockEndColor: "hsl(0deg 0% 100% / 20%)",
-		}
-	}
+		},
+	},
 });

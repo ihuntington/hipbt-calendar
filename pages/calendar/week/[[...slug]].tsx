@@ -1,14 +1,14 @@
 import { formatISO, isDate, parseISO } from "date-fns";
 import { App } from "@/components/App/App";
 import { WeekPage } from "@/components/WeekPage/WeekPage";
-import type { GetServerSideProps } from "next"
+import type { GetServerSideProps } from "next";
 
 import "@/styles/global.css";
 
 type WeekViewIndexProps = {
 	date: string;
 	now: string;
-}
+};
 
 export default function WeekViewIndex(props: { date: string; now: string }) {
 	return (
@@ -34,5 +34,5 @@ export const getServerSideProps: GetServerSideProps<WeekViewIndexProps> = async 
 			date: formatISO(initialDate),
 			now: formatISO(new Date()),
 		},
-	}
-}
+	};
+};

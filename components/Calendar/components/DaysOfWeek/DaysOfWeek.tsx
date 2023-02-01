@@ -16,7 +16,11 @@ export function DaysOfWeek({ date }: { date: Date }) {
 	return (
 		<div className={daysOfWeek}>
 			{dates.map((d) => {
-				return <div key={d.toISOString()} className={dayOfWeek}>{format(d, "eee", { weekStartsOn: 1 })}</div>;
+				return (
+					<div key={d.toISOString()} className={dayOfWeek}>
+						{format(d, "eee", { weekStartsOn: 1 })}
+					</div>
+				);
 			})}
 		</div>
 	);

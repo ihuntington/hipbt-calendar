@@ -56,13 +56,7 @@ function getEndTimeOffset(event: IEvent) {
 	return Math.ceil(hoursOffset + minutesOffset);
 }
 
-export function CalendarEvent({
-	event,
-	dates,
-}: {
-	event: IEvent;
-	dates: Date[];
-}) {
+export function CalendarEvent({ event, dates }: { event: IEvent; dates: Date[] }) {
 	const startTime = new Date(event.start_time);
 	const weekDayIndex = getWeekDayIndex(startTime, dates);
 	const posY = getStartTimeOffset(event) * MULTIPLIER;
@@ -76,10 +70,7 @@ export function CalendarEvent({
 		<Popover>
 			<PopoverTrigger asChild>
 				<div
-					className={clsx(
-						s({ position: "absolute" }),
-						styles.container
-					)}
+					className={clsx(s({ position: "absolute" }), styles.container)}
 					style={assignInlineVars({
 						[styles.height]: `${height}px`,
 						[styles.top]: `${posY}px`,
@@ -97,19 +88,14 @@ export function CalendarEvent({
 							dateTime={startTime.toLocaleString()}
 							className={styles.time}
 						>{`${formatTime(startTime)}`}</time>
-						<p
-							className={clsx(
-								s({ fontSize: "md", fontWeight: 700 }),
-								styles.title
-							)}
-						>
+						<p className={clsx(s({ fontSize: "md", fontWeight: 700 }), styles.title)}>
 							{event.items[0].track.name}
 						</p>
 					</div>
 				</div>
 			</PopoverTrigger>
 			<PopoverContent>
-				<EventPanel event={event}  />
+				<EventPanel event={event} />
 			</PopoverContent>
 			<PopoverPortal />
 		</Popover>

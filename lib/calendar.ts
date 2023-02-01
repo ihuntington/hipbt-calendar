@@ -19,24 +19,30 @@ type ListenEvent = {
 	end_time: Date;
 	items: Play[];
 	images: Image[];
-}
+};
 
 function createListenEvent(item: Play): ListenEvent {
 	const endTime = parseISO(item.played_at);
-	const startTime = subMilliseconds(endTime, item.track.duration_ms || FALLBACK_TRACK_DURATION_MS)
+	const startTime = subMilliseconds(
+		endTime,
+		item.track.duration_ms || FALLBACK_TRACK_DURATION_MS
+	);
 
 	return {
 		items: [item],
 		start_time: startTime,
 		end_time: endTime,
 		images: [],
-	}
+	};
 }
 
 function getMinutesBetweenPlays(previousPlay: Play, currentPlay: Play) {
 	const previousEndTime = parseISO(previousPlay.played_at);
 	const currentEndTime = parseISO(currentPlay.played_at);
-	const currentStartTime = subMilliseconds(currentEndTime, currentPlay.track.duration_ms || FALLBACK_TRACK_DURATION_MS);
+	const currentStartTime = subMilliseconds(
+		currentEndTime,
+		currentPlay.track.duration_ms || FALLBACK_TRACK_DURATION_MS
+	);
 	return differenceInMinutes(currentStartTime, previousEndTime);
 }
 
@@ -56,14 +62,21 @@ export class CalendarWeek {
 	}
 
 	private async getListenEvents() {
-		const plays = await CalendarWeek.bowie.getPlays(this.username, this.startDate, this.endDate);
+		const plays = await CalendarWeek.bowie.getPlays(
+			this.username,
+			this.startDate,
+			this.endDate
+		);
 		const listenEvents = new Map<string, ListenEvent>();
 
 		let currentDate: Date;
 
 		plays.items.forEach((item, index, arr) => {
-			const endTime = parseISO(item.played_at)
-			const startTime = subMilliseconds(endTime, item.track.duration_ms || FALLBACK_TRACK_DURATION_MS)
+			const endTime = parseISO(item.played_at);
+			const startTime = subMilliseconds(
+				endTime,
+				item.track.duration_ms || FALLBACK_TRACK_DURATION_MS
+			);
 
 			if (index === 0) {
 				listenEvents.set(startTime.toString(), createListenEvent(item));
@@ -85,7 +98,7 @@ export class CalendarWeek {
 						...event,
 						items: event.items.concat(item),
 						end_time: endTime,
-					})
+					});
 
 					return;
 				}
@@ -121,7 +134,7 @@ export class CalendarWeek {
 
 	private async getTracksFromSpotify(): Promise<Track[]> {
 		const spotifyIds = this.getCoverTracks().map((t) => t.spotify_id);
-		let cached = await getTracks(spotifyIds) as Track[];
+		let cached = (await getTracks(spotifyIds)) as Track[];
 
 		if (cached) {
 			return cached;
@@ -144,7 +157,7 @@ export class CalendarWeek {
 					return false;
 				}
 
-				return t.id === event.items[0].track.spotify_id
+				return t.id === event.items[0].track.spotify_id;
 			});
 
 			events.set(key, {

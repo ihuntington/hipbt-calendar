@@ -10,6 +10,8 @@ export function TodayButton() {
 	};
 
 	return (
-		<Button type="button" onClick={handleClick}>Today</Button>
+		<Button type="button" onClick={handleClick}>
+			Today
+		</Button>
 	);
 }
