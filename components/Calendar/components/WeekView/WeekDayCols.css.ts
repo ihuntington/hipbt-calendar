@@ -13,7 +13,7 @@ export const separator = style({
 			width: 1,
 		},
 		".dark &::after": {
-			backgroundColor: "hsl(0deg 0% 100% / 20%)",
+			backgroundColor: "hsl(0deg 0% 100% / 10%)",
 		},
 	},
 });

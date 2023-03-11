@@ -72,8 +72,8 @@ export const weekHeader = style({
 	zIndex: 3,
 	selectors: {
 		".dark &": {
-			backgroundColor: vars.colors.stone900,
-			borderBlockEndColor: "hsl(0deg 0% 100% / 20%)",
+			backgroundColor: "hsl(141deg 40% 10%)",
+			borderBlockEndColor: "hsl(0deg 0% 100% / 10%)",
 		},
 	},
 });

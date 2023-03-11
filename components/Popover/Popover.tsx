@@ -14,8 +14,13 @@ interface IPopoverContent {
 
 export const PopoverContent = forwardRef<HTMLDivElement, IPopoverContent>(({ children }, ref) => {
 	return (
-		<PopoverPrimitive.Content asChild side="right" sideOffset={8} hideWhenDetached>
-			<div className={styles.content}>{children}</div>
+		<PopoverPrimitive.Content
+			side="right"
+			sideOffset={8}
+			hideWhenDetached
+			className={styles.content}
+		>
+			{children}
 		</PopoverPrimitive.Content>
 	);
 });

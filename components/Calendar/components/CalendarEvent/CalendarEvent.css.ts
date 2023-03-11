@@ -32,7 +32,7 @@ export const container = style({
 	width: "100%",
 	selectors: {
 		".dark &": {
-			backgroundColor: Color(colors.spotifyGreen).alpha(0.2).hsl().toString(),
+			backgroundColor: Color(colors.spotifyGreen).alpha(0.15).hsl().toString(),
 		},
 	},
 });

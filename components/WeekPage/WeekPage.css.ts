@@ -5,6 +5,11 @@ export const page = style({
 	display: "flex",
 	flexDirection: "column",
 	inlineSize: "100%",
+	selectors: {
+		'.dark &': {
+			backgroundColor: "hsl(141deg 40% 10%)"
+		}
+	}
 });
 
 export const header = style({
@@ -18,7 +23,7 @@ export const header = style({
 	zIndex: 3,
 	selectors: {
 		".dark &": {
-			backgroundColor: vars.colors.stone900,
+			backgroundColor: "hsl(141deg 40% 10%)"
 		},
 	},
 });

@@ -28,14 +28,17 @@ export const time = style({
 	textAlign: "right",
 	selectors: {
 		[`${highlight} &`]: {
-			backgroundColor: vars.colors.stone900,
+			backgroundColor: vars.colors.gray100,
 			color: vars.colors.red500,
 		},
+		[`.dark ${highlight} &`]: {
+			backgroundColor: "hsl(141deg 40% 10%)",
+		}
 	},
 });
 
 export const line = style({
-	backgroundColor: "hsl(0deg 0% 100% / 20%)",
+	backgroundColor: vars.colors.gray300,
 	display: "block",
 	gridColumn: "line-start / line-end",
 	gridRow: 1,
@@ -44,6 +47,12 @@ export const line = style({
 	selectors: {
 		[`${highlight} &`]: {
 			backgroundColor: vars.colors.red500,
+		},
+		[`.dark ${highlight} &`]: {
+			backgroundColor: vars.colors.red500,
+		},
+		".dark &": {
+			backgroundColor: "hsl(0deg 0% 100% / 10%)",
 		},
 	},
 });
