@@ -1,4 +1,4 @@
-import { style, createVar } from "@vanilla-extract/css";
+import { style, createVar, createContainer } from "@vanilla-extract/css";
 import Color from "color";
 import { vars, colors } from "@/styles/theme.css";
 
@@ -9,6 +9,8 @@ const eventMinHeight = createVar();
 export const height = createVar();
 export const top = createVar();
 export const gridColumn = createVar();
+
+export const bodyContainer = createContainer()
 
 export const container = style({
 	vars: {
@@ -22,6 +24,8 @@ export const container = style({
 	borderInlineStartStyle: "solid",
 	borderInlineStartColor: vars.colors.spotifyGreen,
 	borderRadius: 6,
+	containerName: bodyContainer,
+	containerType: "size",
 	display: "flex",
 	gridColumnStart: `calc(${gridColumn} + 2)`,
 	gridColumnEnd: `calc(${gridColumn} + 2)`,
@@ -38,25 +42,46 @@ export const container = style({
 });
 
 export const body = style({
+	display: "flex",
 	flex: 1,
+	flexDirection: "column",
+	justifyContent: "center",
 	padding: 4,
+	"@container": {
+		[`${bodyContainer} (min-height: 2.5rem)`]: {
+			justifyContent: "flex-start",
+			paddingBlock: 6,
+		}
+	},
 });
 
 export const time = style({
 	fontSize: vars.fontSize.xs,
 	color: vars.colors.black,
+	display: "none",
+	"@container": {
+		[`${bodyContainer} (min-height: 2.5rem)`]: {
+			display: "block"
+		}
+	},
 	selectors: {
 		['.dark &']: {
 			color: vars.colors.spotifyGreen
 		}
-	}
+	},
 });
 
 export const title = style({
+	fontSize: vars.fontSize.sm,
 	color: vars.colors.black,
 	overflow: "hidden",
 	textOverflow: "ellipsis",
 	whiteSpace: "nowrap",
+	"@container": {
+		[`${bodyContainer} (min-height: 2.5rem)`]: {
+			marginBlockStart: 2,
+		}
+	},
 	selectors: {
 		['.dark &']: {
 			color: vars.colors.spotifyGreen
