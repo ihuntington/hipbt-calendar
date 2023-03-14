@@ -44,12 +44,22 @@ export const body = style({
 
 export const time = style({
 	fontSize: vars.fontSize.xs,
-	color: vars.colors.spotifyGreen,
+	color: vars.colors.black,
+	selectors: {
+		['.dark &']: {
+			color: vars.colors.spotifyGreen
+		}
+	}
 });
 
 export const title = style({
-	color: Color(colors.spotifyGreen).hsl().toString(),
+	color: vars.colors.black,
 	overflow: "hidden",
 	textOverflow: "ellipsis",
 	whiteSpace: "nowrap",
+	selectors: {
+		['.dark &']: {
+			color: vars.colors.spotifyGreen
+		}
+	}
 });
