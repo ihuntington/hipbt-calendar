@@ -1,18 +1,12 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Have I Played Bowie Today? Calendar
 
-## Getting Started
+This is a calendar view of Have I Played Bowie Today but is fixed to only show my own data at present.
 
-First, run the development server:
+- The UI is based on the Mac OS Calendar app
+- The colour scheme is up in the air and I'm not entirely satisfied with it
+- [Vanilla Extract](https://vanilla-extract.style/) has been used for CSS but as its my first time using the library the implementation is a bit messy. I've taken different approaches in various places to try out features.
+- Data fetching is done using [TanStack Query](https://tanstack.com/query/latest)
+- Using NextJS but with Preact used in the compiled version instead of React
+- There is a dependency on Redis
 
-```bash
-npm run dev
-# or
-yarn dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-## Code style
-
-Prettier by default uses the settings declared in `.editorconfig`.
-
+There are some [ideas](./Ideas.md) on what I want to add in time.
