@@ -30,12 +30,10 @@ export function WeekView() {
 			})}
 		>
 			<WeekHeader />
-			<div className={styles.rowBodyWrapper}>
-				<div className={s({ position: "relative" })}>
-					<HourGrid date={startOfDay(new Date())} />
-					<WeekDayCols dates={dates} />
-					<WeekBody />
-				</div>
+			<div className={clsx(s({ position: "relative" }), styles.rowBodyWrapper)}>
+				<HourGrid date={startOfDay(new Date())} />
+				<WeekDayCols dates={dates} />
+				<WeekBody />
 			</div>
 		</div>
 	);

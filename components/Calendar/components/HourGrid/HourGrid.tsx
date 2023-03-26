@@ -1,9 +1,10 @@
+import { useEffect, useRef } from "react";
 import { addDays, differenceInMinutes, eachHourOfInterval, startOfDay, isSameWeek } from "date-fns";
 import { sprinkles as s } from "@/styles/sprinkles.css";
 import { useCalendarContext } from "../../context/CalendarContext";
 import { HourRow } from "./HourRow";
 
-function getMarkerPosition(date: Date) {
+export function getMarkerPosition(date: Date) {
 	const multiplier = 2;
 	const dateStart = startOfDay(date);
 	const diff = differenceInMinutes(date, dateStart);
@@ -13,15 +14,32 @@ function getMarkerPosition(date: Date) {
 }
 
 function CurrentTimeMarker() {
+	const markerRef = useRef<HTMLDivElement>(null);
+	const hasScrolledToMarker = useRef(false);
 	const { date, time } = useCalendarContext();
 	const posY = getMarkerPosition(time);
+	const showMarker = isSameWeek(date, time);
 
-	if (!isSameWeek(date, time)) {
+	useEffect(() => {
+		if (showMarker && markerRef.current && !hasScrolledToMarker.current) {
+			window.scrollTo({
+				behavior: "auto",
+				left: 0,
+				top: markerRef.current.offsetTop - window.innerHeight / 2,
+			});
+			hasScrolledToMarker.current = true;
+		}
+	}, [showMarker]);
+
+	if (!showMarker) {
+		hasScrolledToMarker.current = false;
+
 		return null;
 	}
 
 	return (
 		<div
+			ref={markerRef}
 			className={s({ position: "absolute" })}
 			style={{
 				top: `${posY}px`,
