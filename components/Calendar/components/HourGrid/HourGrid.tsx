@@ -10,7 +10,8 @@ export function getMarkerPosition(date: Date) {
 	const diff = differenceInMinutes(date, dateStart);
 	const yh = Math.floor(diff / 60) * 60 * multiplier;
 	const ym = (diff % 60) * multiplier;
-	return yh + ym;
+	// TODO: quick hack to correct posY of marker, 16px is the height of the element in the DOM
+	return yh + ym - 16;
 }
 
 function CurrentTimeMarker() {
