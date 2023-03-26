@@ -26,6 +26,11 @@ export const collapse = style({
 export const time = style({
 	gridColumn: "time",
 	textAlign: "right",
+	"@supports": {
+		"(fontVariantNumeric: tabular-nums)": {
+			fontVariantNumeric: "tabular-nums",
+		}
+	},
 	selectors: {
 		[`${highlight} &`]: {
 			backgroundColor: vars.colors.gray100,
