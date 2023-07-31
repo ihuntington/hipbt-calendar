@@ -1,4 +1,4 @@
-import { createThemeContract, createTheme, createGlobalTheme } from "@vanilla-extract/css";
+import { createGlobalTheme, createGlobalThemeContract } from "@vanilla-extract/css";
 
 const SYSTEM_FONT_STACK = `-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
 Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"`;
@@ -55,6 +55,34 @@ export const breakpoints = {
 	tablet: 768,
 	desktop: 1200,
 };
+
+export const variables = createGlobalThemeContract({
+	color: {
+		accent: 'color-accent',
+		body: 'color-body',
+	},
+	size: {
+		"step-0": 'size-step-0',
+		"step-1": 'size-step-1',
+		"step-2": 'size-step-2',
+		"step-3": 'size-step-3',
+		"step-4": 'size-step-4',
+	}
+})
+
+createGlobalTheme(':root', variables, {
+	color: {
+		accent: 'pink',
+		body: 'black',
+	},
+	size: {
+		"step-0": "1rem",
+		"step-1": "1.25rem",
+		"step-2": "1.56rem",
+		"step-3": "1.95rem",
+		"step-4": "clamp(2.44rem, calc(2.01rem + 2.15vw), 3.95rem)"
+	}
+})
 
 // export const vars = createThemeContract({
 // 	colors: {

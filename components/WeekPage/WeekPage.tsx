@@ -2,6 +2,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Flex } from "../";
 import { CalendarProvider } from "../Calendar/context/CalendarContext";
 import { MonthYearTitle, WeekNav, WeekView } from "../Calendar/components";
+import { WeekHeader } from "../Calendar/components";
 
 import "@/styles/global.css";
 
@@ -18,6 +19,7 @@ export function WeekPage({ initialDate, now }: { initialDate: Date; now: Date })
 		<QueryClientProvider client={queryClient}>
 			<CalendarProvider date={initialDate} time={now} view="week">
 				<Page>
+					<WeekHeader />
 					<Flex
 						alignItems="center"
 						justifyContent="spaceBetween"

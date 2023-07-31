@@ -29,8 +29,7 @@ export function WeekView() {
 				[styles.currentWeek]: isSameWeek(new Date(), date),
 			})}
 		>
-			<WeekHeader />
-			<div className={clsx(s({ position: "relative" }), styles.rowBodyWrapper)}>
+			<div className={clsx(s({ position: "relative" }))}>
 				<HourGrid date={startOfDay(new Date())} />
 				<WeekDayCols dates={dates} />
 				<WeekBody />

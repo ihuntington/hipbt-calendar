@@ -38,22 +38,13 @@ function getWeekDayIndex(eventDate: Date, dates: Date[]) {
 
 function getStartTimeOffset(event: IEvent) {
 	const startTime = new Date(event.start_time);
-	const minutes = differenceInMinutes(startTime, startOfDay(startTime));
-	const hoursOffset = Math.floor(minutes / 60) * 60;
-	const minutesOffset = minutes % 60;
-
-	return hoursOffset + minutesOffset;
+	return differenceInMinutes(startTime, startOfDay(startTime));
 }
 
 function getEndTimeOffset(event: IEvent) {
 	const startTime = new Date(event.start_time);
 	const endTime = new Date(event.end_time);
-	const durationInMins = differenceInMinutes(endTime, startTime);
-
-	const hoursOffset = Math.floor(durationInMins / 60) * 60;
-	const minutesOffset = durationInMins % 60;
-
-	return Math.ceil(hoursOffset + minutesOffset);
+	return differenceInMinutes(endTime, startTime);
 }
 
 export function CalendarEvent({ event, dates }: { event: IEvent; dates: Date[] }) {

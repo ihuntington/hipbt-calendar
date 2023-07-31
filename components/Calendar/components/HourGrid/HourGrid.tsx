@@ -3,22 +3,19 @@ import { addDays, differenceInMinutes, eachHourOfInterval, startOfDay, isSameWee
 import { sprinkles as s } from "@/styles/sprinkles.css";
 import { useCalendarContext } from "../../context/CalendarContext";
 import { HourRow } from "./HourRow";
+import * as styles from "./HourGrid.css";
+
+const multiplier = 2;
 
 export function getMarkerPosition(date: Date) {
-	const multiplier = 2;
-	const dateStart = startOfDay(date);
-	const diff = differenceInMinutes(date, dateStart);
-	const yh = Math.floor(diff / 60) * 60 * multiplier;
-	const ym = (diff % 60) * multiplier;
-	// TODO: quick hack to correct posY of marker, 16px is the height of the element in the DOM
-	return yh + ym - 16;
+	return differenceInMinutes(date, startOfDay(date));
 }
 
 function CurrentTimeMarker() {
 	const markerRef = useRef<HTMLDivElement>(null);
 	const hasScrolledToMarker = useRef(false);
 	const { date, time } = useCalendarContext();
-	const posY = getMarkerPosition(time);
+	const posY = getMarkerPosition(time) * multiplier;
 	const showMarker = isSameWeek(date, time);
 
 	useEffect(() => {
@@ -55,13 +52,14 @@ function CurrentTimeMarker() {
 }
 
 export function HourGrid({ date }: { date: Date }) {
+	const dayStart = startOfDay(date);
 	const hours = eachHourOfInterval({
-		start: startOfDay(date),
-		end: addDays(date, 1),
+		start: dayStart,
+		end: addDays(dayStart, 1),
 	});
 
 	return (
-		<div data-layer="hour-grid">
+		<div className={styles.grid}>
 			{hours.map((h, index, arr) => (
 				<HourRow key={h.toISOString()} date={h} collapse={index === arr.length - 1} />
 			))}

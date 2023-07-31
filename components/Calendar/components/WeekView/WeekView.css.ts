@@ -8,6 +8,8 @@ export const wrapper = style({
 	flex: 1,
 	flexDirection: "column",
 	inlineSize: "100%",
+	marginBlockStart: "6.5rem",
+	marginBlockEnd: "4rem",
 	paddingInline: "1rem",
 });
 
