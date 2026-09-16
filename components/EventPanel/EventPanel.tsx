@@ -5,12 +5,16 @@ import * as styles from "./EventPanel.css";
 
 export const EventPanel = ({ event }: { event: IEvent }) => {
 	const coverTrack = event.items[0];
+	const cover = event.images[1] ?? event.images[0];
+
 	return (
 		<div className={styles.panel}>
 			<div className={styles.card}>
-				<div className={styles.image}>
-					<Image src={event.images[1].url} alt={coverTrack.track.name} fill />
-				</div>
+				{cover && (
+					<div className={styles.image}>
+						<Image src={cover.url} alt={coverTrack.track.name} fill />
+					</div>
+				)}
 				<h1 className={styles.title}>{coverTrack.track.name}</h1>
 			</div>
 			<Tracklist items={event.items.slice(0, 10)} />

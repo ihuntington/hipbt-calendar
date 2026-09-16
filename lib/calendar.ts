@@ -14,7 +14,7 @@ const FALLBACK_TRACK_DURATION_MS = 1000 * 60 * 3;
 // TODO: assign 15 to a global somewhere
 const MINUTES_BETWEEN_EVENTS = 15;
 
-type ListenEvent = {
+export type ListenEvent = {
 	start_time: Date;
 	end_time: Date;
 	items: Play[];
