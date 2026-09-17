@@ -5,6 +5,7 @@ import type { Track } from "./spotify";
 
 export enum Service {
 	SPOTIFY = "SPOTIFY",
+	BBC = "BBC",
 }
 
 export type Artist = {
